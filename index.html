@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7970QXZWJD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7970QXZWJD');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PharmaSoftSkills Learning Platform</title>
+    <title>STAR - The Shaigan's Learning Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -405,7 +414,6 @@
                     { question: "What frames requests effectively?", options: ["Demands", "Mutual benefits", "Criticism", "Silence"], correct: "Mutual benefits" }
                 ]
             },
-            // Placeholder structure for remaining 16 books
             {
                 id: 5,
                 title: "Never Split the Difference",
@@ -665,7 +673,7 @@
             if (state.page === "login") {
                 app.innerHTML = `
                     <div class="animate__animated animate__fadeIn">
-                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">PharmaSoftSkills Login</h1>
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">STAR - The Shaigan's Learning Portal Login</h1>
                         <div class="space-y-4">
                             <input id="email" type="email" placeholder="Email" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                             <input id="password" type="password" placeholder="Password" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
@@ -835,7 +843,7 @@
             doc.setFont("helvetica", "bold");
             doc.setFontSize(24);
             doc.setTextColor(128, 0, 128);
-            doc.text("PharmaSoftSkills Scorecard", 105, 20, { align: "center" });
+            doc.text("STAR - The Shaigan's Learning Portal Scorecard", 105, 20, { align: "center" });
             doc.setFontSize(16);
             doc.setTextColor(0);
             doc.text(`Name: ${state.user.name}`, 20, 50);
