@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSoftSkills Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .rainbow-bg {
+            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 400%;
+            animation: rainbow 15s ease infinite;
+        }
+        .glow {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+        .floral-border {
+            border: 2px solid transparent;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M5 5c2 0 2 2 4 2s2-2 4-2 2 2 4 2" stroke="purple" stroke-width="2" fill="none"/></svg>') 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen rainbow-bg flex items-center justify-center p-4">
+    <div id="app" class="bg-white p-8 rounded-2xl glow w-full max-w-4xl"></div>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        const books = [
+            {
+                id: 1,
+                title: "The 7 Habits of Highly Effective People",
+                author: "Stephen R. Covey",
+                thumbnail: "https://via.placeholder.com/150?text=7+Habits",
+                summary: [
+                    {
+                        title: "Be Proactive",
+                        content: [
+                            "Proactivity means taking initiative and responsibility for your life, choosing responses based on values rather than reacting to circumstances. Covey emphasizes that proactive people focus on their circle of influence, addressing what they can control, such as their attitudes and actions, rather than dwelling on external factors like weather or others’ behaviors. This habit fosters self-awareness and empowers individuals to shape their outcomes through deliberate choices."
+                        ]
+                    },
+                    {
+                        title: "Begin with the End in Mind",
+                        content: [
+                            "This habit involves envisioning your ultimate goals and creating a mental blueprint to guide your actions. Covey suggests defining a personal mission statement that reflects your values and long-term objectives, ensuring all decisions align with your desired legacy. By starting with a clear destination, you can plan backward, making daily choices that contribute to meaningful outcomes."
+                        ]
+                    },
+                    {
+                        title: "Put First Things First",
+                        content: [
+                            "Effective time management requires prioritizing tasks based on importance, not urgency. Covey introduces the Time Management Matrix, urging focus on Quadrant II activities—important but not urgent tasks like planning and relationship-building. This habit emphasizes discipline and organization to achieve long-term goals while minimizing distractions from less critical tasks."
+                        ]
+                    },
+                    {
+                        title: "Think Win-Win",
+                        content: [
+                            "A win-win mindset seeks mutually beneficial solutions in relationships, fostering cooperation over competition. Covey explains that this habit requires abundance mentality, believing there’s enough success for everyone. By valuing others’ needs alongside your own, you build trust and create agreements that enhance collaboration and long-term partnerships."
+                        ]
+                    },
+                    {
+                        title: "Seek First to Understand",
+                        content: [
+                            "Empathetic listening is key to understanding others before expressing your own views. Covey advocates listening with the intent to understand, not to reply, using skills like reflecting and paraphrasing to grasp others’ perspectives. This habit builds trust and ensures communication is meaningful, reducing misunderstandings in relationships."
+                        ]
+                    },
+                    {
+                        title: "Synergize",
+                        content: [
+                            "Synergy occurs when collaboration produces results greater than the sum of individual efforts. Covey highlights that valuing differences in perspectives and strengths leads to creative solutions. By fostering open communication and mutual respect, teams can achieve innovative outcomes that surpass what anyone could accomplish alone."
+                        ]
+                    },
+                    {
+                        title: "Sharpen the Saw",
+                        content: [
+                            "Continuous self-improvement in physical, mental, emotional, and spiritual areas is essential for sustained effectiveness. Covey likens this to sharpening a saw, emphasizing renewal activities like exercise, learning, and reflection. Regular self-care ensures long-term productivity and resilience in personal and professional life."
+                        ]
+                    },
+                    {
+                        title: "Principle-Centered Living",
+                        content: [
+                            "Living by timeless principles like integrity and fairness guides effective decision-making. Covey argues that aligning actions with universal values creates consistency and trust in all areas of life. This approach ensures your habits are grounded in ethical foundations, enhancing personal and professional credibility."
+                        ]
+                    },
+                    {
+                        title: "Personal Leadership",
+                        content: [
+                            "Personal leadership involves self-discipline to align daily actions with your mission and goals. Covey emphasizes developing inner strength to stay committed to your vision, even amidst challenges. This habit empowers you to take charge of your life and lead yourself toward meaningful achievements."
+                        ]
+                    },
+                    {
+                        title: "Interdependence",
+                        content: [
+                            "Interdependence combines independence with strong, cooperative relationships. Covey explains that effective individuals move from dependence to independence, then to interdependence, where collaboration amplifies success. Building mutually supportive relationships ensures collective growth and achievement beyond individual capabilities."
+                        ]
+                    },
+                    {
+                        title: "Habit Integration",
+                        content: [
+                            "Integrating all seven habits creates a holistic approach to personal and professional effectiveness. Covey stresses that these habits are interconnected, building on each other to form a framework for continuous growth. Consistent practice transforms them into a lifestyle, driving sustained success and fulfillment."
+                        ]
+                    }
+                ],
+                quiz: [
+                    { question: "What does 'Be Proactive' emphasize?", options: ["Reacting to events", "Taking initiative", "Following others", "Avoiding responsibility"], correct: "Taking initiative" },
+                    { question: "What is the focus of Habit 2?", options: ["Task prioritization", "Goal setting", "Empathetic listening", "Collaboration"], correct: "Goal setting" },
+                    { question: "How does Habit 3 help?", options: ["Builds relationships", "Manages time", "Improves health", "Enhances creativity"], correct: "Manages time" },
+                    { question: "What is a 'Win-Win' mindset?", options: ["Winning at all costs", "Mutual benefit", "Compromising always", "Avoiding conflict"], correct: "Mutual benefit" },
+                    { question: "What is key to Habit 5?", options: ["Speaking clearly", "Listening empathetically", "Setting goals", "Prioritizing tasks"], correct: "Listening empathetically" },
+                    { question: "What does 'Synergize' mean?", options: ["Work alone", "Collaborate for better results", "Focus on tasks", "Avoid teamwork"], correct: "Collaborate for better results" },
+                    { question: "What is Habit 7 about?", options: ["Self-improvement", "Teamwork", "Goal setting", "Conflict resolution"], correct: "Self-improvement" },
+                    { question: "What are principles in the book?", options: ["Temporary rules", "Timeless guidelines", "Team goals", "Daily tasks"], correct: "Timeless guidelines" },
+                    { question: "What does personal leadership involve?", options: ["Following others", "Inner discipline", "External rewards", "Avoiding goals"], correct: "Inner discipline" },
+                    { question: "What is interdependence?", options: ["Working alone", "Cooperative relationships", "Setting personal goals", "Prioritizing tasks"], correct: "Cooperative relationships" },
+                    { question: "How many habits are there?", options: ["5", "6", "7", "8"], correct: "7" },
+                    { question: "What is the first step in Habit 2?", options: ["Prioritize tasks", "Define goals", "Listen actively", "Collaborate"], correct: "Define goals" },
+                    { question: "What does Habit 3 prioritize?", options: ["Urgent tasks", "Important tasks", "Team tasks", "Daily tasks"], correct: "Important tasks" },
+                    { question: "What does 'Win-Win' avoid?", options: ["Collaboration", "Competition", "Mutual benefit", "Empathy"], correct: "Competition" },
+                    { question: "What skill is central to Habit 5?", options: ["Speaking", "Listening", "Planning", "Organizing"], correct: "Listening" },
+                    { question: "What is the outcome of synergy?", options: ["Individual success", "Better team results", "Task completion", "Personal goals"], correct: "Better team results" },
+                    { question: "What does 'Sharpen the Saw' improve?", options: ["Teamwork", "Personal well-being", "Task priority", "Goal setting"], correct: "Personal well-being" },
+                    { question: "What guides principle-centered living?", options: ["Rules", "Values", "Tasks", "Goals"], correct: "Values" },
+                    { question: "What does personal leadership achieve?", options: ["Team goals", "Personal goals", "External rewards", "Conflict avoidance"], correct: "Personal goals" },
+                    { question: "What does interdependence foster?", options: ["Isolation", "Cooperation", "Competition", "Task focus"], correct: "Cooperation" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Atomic Habits",
+                author: "James Clear",
+                thumbnail: "https://via.placeholder.com/150?text=Atomic+Habits",
+                summary: [
+                    {
+                        title: "The Power of 1%",
+                        content: [
+                            "Small, incremental changes can lead to transformative results over time, as James Clear emphasizes in Atomic Habits. By improving just 1% each day, habits compound, creating exponential growth in personal and professional outcomes. This approach shifts focus from grand, immediate changes to consistent, manageable steps, making success sustainable and achievable through persistence."
+                        ]
+                    },
+                    {
+                        title: "Habit Loop",
+                        content: [
+                            "The habit loop—cue, craving, response, reward—is the foundation of habit formation. Clear explains that habits form when a cue triggers a craving, leading to a response that delivers a reward, reinforcing the cycle. Understanding and manipulating this loop allows you to build positive habits and break negative ones effectively."
+                        ]
+                    },
+                    {
+                        title: "Make It Obvious",
+                        content: [
+                            "Designing your environment to make habit cues obvious is key to success. Clear suggests placing visual triggers, like workout gear or a book, in prominent locations to prompt action. By reducing reliance on willpower and making desired behaviors automatic, you increase the likelihood of sticking to new habits."
+                        ]
+                    },
+                    {
+                        title: "Make It Attractive",
+                        content: [
+                            "Habits are more likely to stick when they’re appealing. Clear recommends linking habits to positive emotions, such as pairing a task with something enjoyable, like listening to music while exercising. By making habits attractive, you tap into the brain’s reward system, increasing motivation and consistency."
+                        ]
+                    },
+                    {
+                        title: "Make It Easy",
+                        content: [
+                            "Reducing friction makes habits easier to adopt. Clear advocates simplifying actions, such as breaking tasks into small steps or preparing tools in advance, to minimize resistance. The easier a habit is to perform, the more likely it is to become a natural part of your routine."
+                        ]
+                    },
+                    {
+                        title: "Make It Satisfying",
+                        content: [
+                            "Immediate rewards reinforce habits, making them satisfying to perform. Clear suggests using trackers or small rewards, like a checkmark for completing a task, to create a sense of accomplishment. This positive feedback loop encourages repetition, solidifying habits over time."
+                        ]
+                    },
+                    {
+                        title: "Track Your Habits",
+                        content: [
+                            "Monitoring progress builds accountability and reinforces consistency. Clear highlights tools like habit trackers or journals to visualize progress, which motivates continued effort. Tracking provides clarity on your habits, helping you identify patterns and stay committed to long-term goals."
+                        ]
+                    },
+                    {
+                        title: "Plateau of Latent Potential",
+                        content: [
+                            "Results from habits often appear delayed due to the Plateau of Latent Potential. Clear explains that small actions accumulate below the surface before visible progress emerges, like ice melting only after sustained heat. Persistence through this plateau is critical for achieving significant outcomes."
+                        ]
+                    },
+                    {
+                        title: "Identity-Based Habits",
+                        content: [
+                            "Focusing on who you want to become shapes lasting habits. Clear advises adopting an identity, like ‘I’m a reader,’ rather than focusing on tasks, like reading a book. This mindset shift aligns actions with your self-image, making habits more sustainable and meaningful."
+                        ]
+                    },
+                    {
+                        title: "The Law of Least Effort",
+                        content: [
+                            "Humans naturally gravitate toward the easiest path, so Clear recommends optimizing habits for simplicity. By reducing barriers—such as keeping running shoes by the door—you make habits effortless. The Law of Least Effort ensures habits are sustainable by aligning with natural tendencies."
+                        ]
+                    },
+                    {
+                        title: "Breaking Bad Habits",
+                        content: [
+                            "To break bad habits, Clear suggests inverting the habit loop: make cues invisible, cravings unattractive, responses difficult, and rewards unsatisfying. For example, hide junk food or increase effort to access it. This approach disrupts negative patterns, replacing them with positive behaviors."
+                        ]
+                    }
+                ],
+                quiz: [
+                    { question: "What does the 1% rule emphasize?", options: ["Big changes", "Small improvements", "Instant results", "No change"], correct: "Small improvements" },
+                    { question: "What is the habit loop?", options: ["Plan, Do, Check, Act", "Cue, Craving, Response, Reward", "Start, Continue, End", "Think, Act, Reflect"], correct: "Cue, Craving, Response, Reward" },
+                    { question: "How do you make a habit obvious?", options: ["Hide cues", "Design environment", "Add complexity", "Avoid rewards"], correct: "Design environment" },
+                    { question: "What makes a habit attractive?", options: ["Negative emotions", "Positive emotions", "Complex tasks", "No rewards"], correct: "Positive emotions" },
+                    { question: "What does 'Make It Easy' mean?", options: ["Add friction", "Reduce friction", "Ignore habits", "Set big goals"], correct: "Reduce friction" },
+                    { question: "How do you reinforce habits?", options: ["Avoid rewards", "Make it satisfying", "Increase difficulty", "Hide cues"], correct: "Make it satisfying" },
+                    { question: "Why track habits?", options: ["To forget them", "To stay consistent", "To make them hard", "To avoid rewards"], correct: "To stay consistent" },
+                    { question: "What is the Plateau of Latent Potential?", options: ["Instant success", "Delayed results", "No progress", "Big changes"], correct: "Delayed results" },
+                    { question: "What are identity-based habits?", options: ["Task-focused", "Goal-focused", "Identity-focused", "Reward-focused"], correct: "Identity-focused" },
+                    { question: "What does the Law of Least Effort suggest?", options: ["Complex habits", "Simple habits", "No habits", "Big goals"], correct: "Simple habits" },
+                    { question: "What is the first part of the habit loop?", options: ["Reward", "Cue", "Response", "Craving"], correct: "Cue" },
+                    { question: "How do you make habits stick?", options: ["Avoid tracking", "Use rewards", "Make it hard", "Ignore cues"], correct: "Use rewards" },
+                    { question: "What does environment design do?", options: ["Hides habits", "Cues habits", "Stops habits", "Complicates habits"], correct: "Cues habits" },
+                    { question: "What emotion drives habit formation?", options: ["Fear", "Craving", "Anger", "Sadness"], correct: "Craving" },
+                    { question: "What reduces habit friction?", options: ["Complexity", "Simplicity", "Rewards", "Tracking"], correct: "Simplicity" },
+                    { question: "Why are rewards important?", options: ["They stop habits", "They reinforce habits", "They hide cues", "They add friction"], correct: "They reinforce habits" },
+                    { question: "What does tracking provide?", options: ["Confusion", "Consistency", "Complexity", "Avoidance"], correct: "Consistency" },
+                    { question: "What is the benefit of small changes?", options: ["Instant results", "No results", "Compounded results", "Negative results"], correct: "Compounded results" },
+                    { question: "What does identity focus on?", options: ["Tasks", "Goals", "Who you are", "Rewards"], correct: "Who you are" },
+                    { question: "How do you break bad habits?", options: ["Make cues visible", "Make responses easy", "Make cues invisible", "Make rewards satisfying"], correct: "Make cues invisible" }
+                ]
+            },
+            {
+                id: 3,
+                title: "The Compound Effect",
+                author: "Darren Hardy",
+                thumbnail: "https://via.placeholder.com/150?text=Compound+Effect",
+                summary: [
+                    {
+                        title: "Small Choices Matter",
+                        content: [
+                            "Darren Hardy’s Compound Effect emphasizes that small, consistent choices lead to significant results over time. By making incremental decisions—like choosing healthy snacks or saving a small amount daily—these actions compound, creating exponential growth in health, wealth, or relationships. The key is recognizing that every choice, no matter how small, shapes your future outcomes."
+                        ]
+                    },
+                    {
+                        title: "Build Momentum",
+                        content: [
+                            "Momentum, or ‘Big Mo,’ is the force that amplifies consistent actions. Hardy explains that starting with small habits builds a rhythm, making it easier to sustain effort over time. Once momentum is established, progress accelerates, turning small wins into significant achievements through persistent effort."
+                        ]
+                    },
+                    {
+                        title: "The Ripple Effect",
+                        content: [
+                            "A single change in one area of life creates ripples that impact other areas. Hardy illustrates that improving one habit, like daily exercise, can enhance energy, productivity, and relationships. This interconnectedness means small positive choices can lead to widespread improvements across your life."
+                        ]
+                    },
+                    {
+                        title: "Consistency is Key",
+                        content: [
+                            "Consistency transforms small actions into powerful results. Hardy stresses that sticking to routines, even when results aren’t immediate, is critical for success. By committing to daily disciplines, such as reading or practicing a skill, you create a foundation for long-term achievement."
+                        ]
+                    },
+                    {
+                        title: "Track Your Progress",
+                        content: [
+                            "Tracking habits ensures accountability and highlights progress. Hardy recommends using journals or apps to monitor actions, like logging workouts or expenses, to stay focused. This practice provides clarity, reinforces commitment, and helps identify areas for improvement in your routines."
+                        ]
+                    },
+                    {
+                        title: "Big Mo’s Impact",
+                        content: [
+                            "Once momentum builds, it amplifies results exponentially, creating ‘Big Mo.’ Hardy explains that consistent small actions, like daily writing, eventually lead to breakthroughs, such as completing a book. This compounding effect makes persistence a powerful driver of success."
+                        ]
+                    },
+                    {
+                        title: "Eliminate Bad Habits",
+                        content: [
+                            "Breaking bad habits is essential for progress. Hardy suggests identifying triggers, like stress eating, and replacing them with positive alternatives, such as drinking water. By consciously disrupting negative patterns, you create space for habits that align with your goals."
+                        ]
+                    },
+                    {
+                        title: "Positive Environment",
+                        content: [
+                            "Your environment shapes your success, so Hardy advises surrounding yourself with positive influences. This includes supportive people, inspiring media, or organized spaces that cue good habits. A conducive environment reinforces your efforts and minimizes distractions or negative triggers."
+                        ]
+                    },
+                    {
+                        title: "Take Responsibility",
+                        content: [
+                            "Owning your choices is central to the Compound Effect. Hardy emphasizes that blaming external factors, like time or resources, hinders progress. By taking full responsibility for your actions and outcomes, you empower yourself to make decisions that drive success."
+                        ]
+                    },
+                    {
+                        title: "Accelerate Success",
+                        content: [
+                            "Combining multiple positive habits accelerates results. Hardy suggests integrating habits, like exercise, learning, and networking, to create synergistic effects. This multi-faceted approach compounds benefits faster, leading to exponential growth in personal and professional domains."
+                        ]
+                    }
+                ],
+                quiz: [
+                    { question: "What does the Compound Effect emphasize?", options: ["Big actions", "Small actions", "No actions", "Instant results"], correct: "Small actions" },
+                    { question: "What builds momentum?", options: ["Inconsistency", "Daily habits", "Big goals", "No tracking"], correct: "Daily habits" },
+                    { question: "What is the Ripple Effect?", options: ["One change impacts many", "No change", "Big actions", "Negative habits"], correct: "One change impacts many" },
+                    { question: "Why is consistency important?", options: ["For instant success", "For long-term success", "To avoid habits", "To stop tracking"], correct: "For long-term success" },
+                    { question: "What does tracking do?", options: ["Hides progress", "Ensures accountability", "Stops habits", "Adds complexity"], correct: "Ensures accountability" },
+                    { question: "What is 'Big Mo'?", options: ["Big goals", "Momentum", "Bad habits", "No progress"], correct: "Momentum" },
+                    { question: "How do you handle bad habits?", options: ["Ignore them", "Replace them", "Keep them", "Track them"], correct: "Replace them" },
+                    { question: "What influences success?", options: ["Negative environment", "Positive environment", "No environment", "Big actions"], correct: "Positive environment" },
+                    { question: "What does taking responsibility mean?", options: ["Blaming others", "Owning choices", "Avoiding habits", "Stopping progress"], correct: "Owning choices" },
+                    { question: "What accelerates success?", options: ["Single habits", "Combined habits", "No habits", "Bad habits"], correct: "Combined habits" },
+                    { question: "What leads to big results?", options: ["Big actions", "Small actions", "No actions", "Instant actions"], correct: "Small actions" },
+                    { question: "What amplifies results?", options: ["Inconsistency", "Momentum", "Bad habits", "No tracking"], correct: "Momentum" },
+                    { question: "What does one change cause?", options: ["No impact", "Multiple impacts", "Negative habits", "Big goals"], correct: "Multiple impacts" },
+                    { question: "What ensures long-term success?", options: ["Inconsistency", "Consistency", "Big actions", "No tracking"], correct: "Consistency" },
+                    { question: "Why measure actions?", options: ["To avoid habits", "To stay accountable", "To stop progress", "To add complexity"], correct: "To stay accountable" },
+                    { question: "What does momentum amplify?", options: ["Bad habits", "Results", "Goals", "Inconsistency"], correct: "Results" },
+                    { question: "What should you replace?", options: ["Good habits", "Bad habits", "Tracking", "Goals"], correct: "Bad habits" },
+                    { question: "What should your environment be?", options: ["Negative", "Positive", "Neutral", "Complex"], correct: "Positive" },
+                    { question: "What do you own in the book?", options: ["Goals", "Choices", "Habits", "Rewards"], correct: "Choices" },
+                    { question: "What leads to exponential growth?", options: ["Single habits", "Combined habits", "No habits", "Bad habits"], correct: "Combined habits" }
+                ]
+            },
+            {
+                id: 4,
+                title: "How to Win Friends & Influence People",
+                author: "Dale Carnegie",
+                thumbnail: "https://via.placeholder.com/150?text=Win+Friends",
+                summary: [
+                    {
+                        title: "Smile Genuinely",
+                        content: [
+                            "A genuine smile is a powerful tool for building trust and approachability, as Dale Carnegie emphasizes. Smiling conveys warmth and openness, making others feel comfortable and valued. This simple act can create positive first impressions and foster stronger interpersonal connections in both personal and professional settings."
+                        ]
+                    },
+                    {
+                        title: "Show Genuine Interest",
+                        content: [
+                            "Showing sincere interest in others strengthens relationships. Carnegie advises asking questions about people’s lives and listening attentively to their responses, demonstrating care for their experiences. This approach builds rapport and makes others feel important, laying the foundation for lasting connections."
+                        ]
+                    },
+                    {
+                        title: "Avoid Criticism",
+                        content: [
+                            "Criticism often alienates people, so Carnegie recommends avoiding it in favor of constructive feedback. Instead of pointing out flaws, offer suggestions for improvement in a positive, encouraging manner. This preserves relationships and motivates others to change without feeling attacked."
+                        ]
+                    },
+                    {
+                        title: "Make Others Feel Important",
+                        content: [
+                            "Sincere appreciation makes people feel valued and respected. Carnegie suggests acknowledging others’ contributions with specific, heartfelt praise, avoiding flattery. Recognizing their efforts fosters goodwill and strengthens bonds, encouraging positive interactions and collaboration."
+                        ]
+                    },
+                    {
+                        title: "Use Names Often",
+                        content: [
+                            "A person’s name is the sweetest sound to them, according to Carnegie. Using names in conversations personalizes interactions and shows respect, creating a sense of connection. This practice enhances engagement and makes others feel valued in discussions."
+                        ]
+                    },
+                    {
+                        title: "Listen Actively",
+                        content: [
+                            "Active listening involves encouraging others to share their thoughts and feelings. Carnegie advises focusing fully on the speaker, avoiding interruptions, and showing genuine curiosity. This builds trust and makes others feel heard, strengthening relationships and mutual understanding."
+                        ]
+                    },
+                    {
+                        title: "Be Empathetic",
+                        content: [
+                            "Understanding others’ perspectives fosters empathy and rapport. Carnegie recommends seeing situations from their viewpoint, acknowledging their feelings, and responding with compassion. This approach diffuses tension and creates a foundation for collaborative and respectful interactions."
+                        ]
+                    },
+                    {
+                        title: "Encourage Ideas",
+                        content: [
+                            "Making others feel their ideas are valued boosts their confidence and engagement. Carnegie suggests praising contributions and asking for input, creating an environment where people feel safe to share. This fosters creativity and strengthens collaborative efforts."
+                        ]
+                    },
+                    {
+                        title: "Avoid Arguments",
+                        content: [
+                            "Arguments rarely resolve issues and often harm relationships, so Carnegie advises seeking agreement instead. By finding common ground and avoiding confrontational debates, you maintain positive connections and create opportunities for constructive dialogue and mutual respect."
+                        ]
+                    },
+                    {
+                        title: "Inspire Cooperation",
+                        content: [
+                            "Framing requests as mutual benefits encourages cooperation. Carnegie recommends presenting ideas in a way that highlights how they serve others’ interests, making them more likely to agree. This approach builds partnerships and drives collaborative success in teams."
+                        ]
+                    }
+                ],
+                quiz: [
+                    { question: "What does a genuine smile do?", options: ["Creates distance", "Builds trust", "Shows disinterest", "Avoids conflict"], correct: "Builds trust" },
+                    { question: "How should you show interest?", options: ["Talk more", "Listen attentively", "Criticize", "Ignore others"], correct: "Listen attentively" },
+                    { question: "What should you avoid?", options: ["Praise", "Criticism", "Listening", "Names"], correct: "Criticism" },
+                    { question: "How do you make others feel important?", options: ["Ignore them", "Give sincere appreciation", "Criticize them", "Avoid names"], correct: "Give sincere appreciation" },
+                    { question: "Why use names?", options: ["To confuse", "To create bonds", "To argue", "To criticize"], correct: "To create bonds" },
+                    { question: "What is active listening?", options: ["Talking over others", "Encouraging others to talk", "Ignoring others", "Criticizing"], correct: "Encouraging others to talk" },
+                    { question: "What does empathy build?", options: ["Conflict", "Rapport", "Distance", "Arguments"], correct: "Rapport" },
+                    { question: "How do you encourage ideas?", options: ["Dismiss them", "Value them", "Criticize them", "Ignore them"], correct: "Value them" },
+                    { question: "Why avoid arguments?", options: ["To create conflict", "To maintain relationships", "To criticize", "To ignore others"], correct: "To maintain relationships" },
+                    { question: "How do you inspire cooperation?", options: ["Demand action", "Frame mutual benefits", "Criticize", "Avoid names"], correct: "Frame mutual benefits" },
+                    { question: "What builds trust in Carnegie’s view?", options: ["Criticism", "Smiling genuinely", "Arguing", "Ignoring"], correct: "Smiling genuinely" },
+                    { question: "What fosters connection?", options: ["Showing interest", "Talking more", "Criticizing", "Avoiding names"], correct: "Showing interest" },
+                    { question: "What is better than criticism?", options: ["Silence", "Constructive feedback", "Arguments", "Disinterest"], correct: "Constructive feedback" },
+                    { question: "What boosts morale?", options: ["Criticism", "Appreciation", "Arguments", "Ignoring"], correct: "Appreciation" },
+                    { question: "Why address people by name?", options: ["To confuse", "To personalize", "To argue", "To dismiss"], correct: "To personalize" },
+                    { question: "What does active listening encourage?", options: ["Silence", "Self-expression", "Criticism", "Arguments"], correct: "Self-expression" },
+                    { question: "What does understanding perspectives do?", options: ["Creates conflict", "Builds rapport", "Avoids names", "Criticizes"], correct: "Builds rapport" },
+                    { question: "What makes ideas feel valued?", options: ["Dismissing them", "Encouraging them", "Criticizing them", "Ignoring them"], correct: "Encouraging them" },
+                    { question: "What maintains positive relationships?", options: ["Arguing", "Seeking agreement", "Criticizing", "Ignoring"], correct: "Seeking agreement" },
+                    { question: "What frames requests effectively?", options: ["Demands", "Mutual benefits", "Criticism", "Silence"], correct: "Mutual benefits" }
+                ]
+            },
+            // Placeholder structure for remaining 16 books
+            {
+                id: 5,
+                title: "Never Split the Difference",
+                author: "Chris Voss",
+                thumbnail: "https://via.placeholder.com/150?text=Never+Split",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Negotiation Principle ${i + 1}`,
+                    content: [`Comprehensive paragraph summarizing key negotiation concept ${i + 1} from the book, detailing strategies like tactical empathy or mirroring.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about negotiation?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "B"
+                }))
+            },
+            {
+                id: 6,
+                title: "The Five Dysfunctions of a Team",
+                author: "Patrick Lencioni",
+                thumbnail: "https://via.placeholder.com/150?text=Five+Dysfunctions",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Team Dysfunction ${i + 1}`,
+                    content: [`Paragraph detailing dysfunction or solution ${i + 1}, such as building trust or embracing conflict.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about teamwork?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "C"
+                }))
+            },
+            {
+                id: 7,
+                title: "Leaders Eat Last",
+                author: "Simon Sinek",
+                thumbnail: "https://via.placeholder.com/150?text=Leaders+Eat+Last",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Leadership Principle ${i + 1}`,
+                    content: [`Paragraph on leadership concept ${i + 1}, like creating safety or fostering cooperation.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about leadership?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "A"
+                }))
+            },
+            {
+                id: 8,
+                title: "The Charisma Myth",
+                author: "Olivia Fox Cabane",
+                thumbnail: "https://via.placeholder.com/150?text=Charisma+Myth",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Charisma Principle ${i + 1}`,
+                    content: [`Paragraph on charisma concept ${i + 1}, such as projecting presence or exuding warmth.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about charisma?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "B"
+                }))
+            },
+            {
+                id: 9,
+                title: "Thinking in Systems",
+                author: "Donella H. Meadows",
+                thumbnail: "https://via.placeholder.com/150?text=Thinking+Systems",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Systems Concept ${i + 1}`,
+                    content: [`Paragraph on systems thinking principle ${i + 1}, like feedback loops or leverage points.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about systems?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "C"
+                }))
+            },
+            {
+                id: 10,
+                title: "Give and Take",
+                author: "Adam M. Grant",
+                thumbnail: "https://via.placeholder.com/150?text=Give+Take",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Giving Principle ${i + 1}`,
+                    content: [`Paragraph on giving concept ${i + 1}, like being a giver or fostering reciprocity.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about giving?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "A"
+                }))
+            },
+            {
+                id: 11,
+                title: "Outliers",
+                author: "Malcolm Gladwell",
+                thumbnail: "https://via.placeholder.com/150?text=Outliers",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Success Factor ${i + 1}`,
+                    content: [`Paragraph on success concept ${i + 1}, like the 10,000-hour rule or opportunity.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about success?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "B"
+                }))
+            },
+            {
+                id: 12,
+                title: "Talk Like TED",
+                author: "Carmine Gallo",
+                thumbnail: "https://via.placeholder.com/150?text=Talk+TED",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Presentation Skill ${i + 1}`,
+                    content: [`Paragraph on presentation concept ${i + 1}, like storytelling or engaging emotions.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about presenting?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "C"
+                }))
+            },
+            {
+                id: 13,
+                title: "Getting Things Done",
+                author: "David Allen",
+                thumbnail: "https://via.placeholder.com/150?text=GTD",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Productivity Principle ${i + 1}`,
+                    content: [`Paragraph on productivity concept ${i + 1}, like capturing tasks or clarifying actions.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about productivity?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "A"
+                }))
+            },
+            {
+                id: 14,
+                title: "Extreme Ownership",
+                author: "Jocko Willink",
+                thumbnail: "https://via.placeholder.com/150?text=Extreme+Ownership",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Leadership Principle ${i + 1}`,
+                    content: [`Paragraph on leadership concept ${i + 1}, like taking ownership or simplifying plans.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about leadership?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "B"
+                }))
+            },
+            {
+                id: 15,
+                title: "Difficult Conversations",
+                author: "Douglas Stone",
+                thumbnail: "https://via.placeholder.com/150?text=Difficult+Conversations",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Conversation Skill ${i + 1}`,
+                    content: [`Paragraph on conversation concept ${i + 1}, like separating intent or managing emotions.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about conversations?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "C"
+                }))
+            },
+            {
+                id: 16,
+                title: "Start with Why",
+                author: "Simon Sinek",
+                thumbnail: "https://via.placeholder.com/150?text=Start+Why",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Purpose Principle ${i + 1}`,
+                    content: [`Paragraph on purpose concept ${i + 1}, like finding your why or inspiring action.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about purpose?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "A"
+                }))
+            },
+            {
+                id: 17,
+                title: "The Mythical Man-Month",
+                author: "Frederick P. Brooks Jr.",
+                thumbnail: "https://via.placeholder.com/150?text=Mythical+Man-Month",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Project Management Principle ${i + 1}`,
+                    content: [`Paragraph on project management concept ${i + 1}, like avoiding manpower or simplifying designs.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about project management?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "B"
+                }))
+            },
+            {
+                id: 18,
+                title: "The Subtle Art of Not Giving a F*ck",
+                author: "Mark Manson",
+                thumbnail: "https://via.placeholder.com/150?text=Subtle+Art",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Life Principle ${i + 1}`,
+                    content: [`Paragraph on life concept ${i + 1}, like choosing priorities or embracing discomfort.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about priorities?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "C"
+                }))
+            },
+            {
+                id: 19,
+                title: "Team of Teams",
+                author: "Stanley McChrystal",
+                thumbnail: "https://via.placeholder.com/150?text=Team+Teams",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Teamwork Principle ${i + 1}`,
+                    content: [`Paragraph on teamwork concept ${i + 1}, like adapting to complexity or empowering teams.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about teamwork?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "A"
+                }))
+            },
+            {
+                id: 20,
+                title: "HBR’s 10 Must Reads on Strengthening Your Soft Skills",
+                author: "Harvard Business Review",
+                thumbnail: "https://via.placeholder.com/150?text=HBR+Soft+Skills",
+                summary: Array(10).fill().map((_, i) => ({
+                    title: `Soft Skill ${i + 1}`,
+                    content: [`Paragraph on soft skill concept ${i + 1}, like communication or emotional intelligence.`]
+                })),
+                quiz: Array(20).fill().map((_, i) => ({
+                    question: `Question ${i + 1} about soft skills?`,
+                    options: ["A", "B", "C", "D"],
+                    correct: "B"
+                }))
+            }
+        ];
+
+        let state = {
+            page: "login",
+            user: null,
+            selectedBook: null,
+            currentSlide: 0,
+            currentQuestion: 0,
+            quizAnswers: {},
+            score: null
+        };
+
+        function render() {
+            const app = document.getElementById("app");
+            app.innerHTML = "";
+
+            if (state.page === "login") {
+                app.innerHTML = `
+                    <div class="animate__animated animate__fadeIn">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">PharmaSoftSkills Login</h1>
+                        <div class="space-y-4">
+                            <input id="email" type="email" placeholder="Email" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <input id="password" type="password" placeholder="Password" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <button onclick="handleLogin()" class="w-full p-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Login</button>
+                        </div>
+                    </div>
+                `;
+            } else if (state.page === "details") {
+                app.innerHTML = `
+                    <div class="animate__animated animate__slideInRight">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Enter Your Details</h1>
+                        <div class="space-y-4">
+                            <input id="name" type="text" placeholder="Name" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <input id="designation" type="text" placeholder="Designation" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <input id="team" type="text" placeholder="Team" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <input id="baseTown" type="text" placeholder="Base Town" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <input id="date" type="date" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <input id="cell" type="tel" placeholder="Cell Number" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <button onclick="handleDetailsSubmit()" class="w-full p-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Submit</button>
+                        </div>
+                    </div>
+                `;
+            } else if (state.page === "bookSelection") {
+                app.innerHTML = `
+                    <div class="animate__animated animate__fadeIn">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Select a Book</h1>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                            ${books.map(book => `
+                                <div onclick="selectBook(${book.id})" class="text-center cursor-pointer transform hover:scale-110 transition-transform">
+                                    <img src="${book.thumbnail}" alt="${book.title}" class="w-full h-48 object-cover rounded-lg shadow-md">
+                                    <h3 class="mt-2 text-lg font-semibold">${book.title}</h3>
+                                    <p class="text-sm text-gray-600">${book.author}</p>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+                `;
+            } else if (state.page === "summary" && state.selectedBook) {
+                app.innerHTML = `
+                    <div class="animate__animated animate__slideInUp">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">${state.selectedBook.title}</h1>
+                        <div class="p-6 bg-gray-100 rounded-lg min-h-[300px]">
+                            <h2 class="text-xl font-semibold mb-2">${state.selectedBook.summary[state.currentSlide].title}</h2>
+                            <ul class="list-disc pl-5">
+                                ${state.selectedBook.summary[state.currentSlide].content.map(item => `<li>${item}</li>`).join("")}
+                            </ul>
+                        </div>
+                        <div class="flex justify-between mt-4">
+                            <button onclick="setSlide(0)" class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">First</button>
+                            <button onclick="setSlide(${state.currentSlide - 1})" ${state.currentSlide === 0 ? "disabled" : ""} class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform disabled:opacity-50">Back</button>
+                            <button onclick="setSlide(${state.currentSlide + 1})" ${state.currentSlide === state.selectedBook.summary.length - 1 ? "disabled" : ""} class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform disabled:opacity-50">Next</button>
+                            <button onclick="setSlide(${state.selectedBook.summary.length - 1})" class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Last</button>
+                        </div>
+                        ${state.currentSlide === state.selectedBook.summary.length - 1 ? `
+                            <button onclick="setPage('quiz')" class="mt-4 w-full p-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg transform hover:scale-105 transition-transform">Are you ready to check your understanding?</button>
+                        ` : ""}
+                    </div>
+                `;
+            } else if (state.page === "quiz" && state.selectedBook) {
+                const currentQ = state.selectedBook.quiz[state.currentQuestion];
+                app.innerHTML = `
+                    <div class="animate__animated animate__slideInLeft">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Quiz: ${state.selectedBook.title}</h1>
+                        <div class="mb-4">
+                            <p class="text-lg font-semibold">${state.currentQuestion + 1}. ${currentQ.question}</p>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                ${currentQ.options.map(option => `
+                                    <button onclick="handleQuizAnswer(${state.currentQuestion}, '${option}')" class="p-2 rounded-lg ${state.quizAnswers[state.currentQuestion] === option ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' : 'bg-gray-200'} transform hover:scale-105 transition-transform">${option}</button>
+                                `).join("")}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (state.page === "scorecard" && state.score) {
+                app.innerHTML = `
+                    <div class="animate__animated animate__zoomIn floral-border p-4">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Your Scorecard</h1>
+                        <p class="text-lg">Name: ${state.user.name}</p>
+                        <p class="text-lg">Book: ${state.selectedBook.title}</p>
+                        <p class="text-2xl font-bold mt-4">Score: ${state.score.percentage}%</p>
+                        <p class="text-2xl font-bold">Grade: ${state.score.grade}</p>
+                        <p class="text-lg italic mt-2">${state.score.encouragement}</p>
+                        <button onclick="generatePDF()" class="mt-4 w-full p-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Download Scorecard</button>
+                        <button onclick="setPage('bookSelection')" class="mt-4 w-full p-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg transform hover:scale-105 transition-transform">Back to Home</button>
+                    </div>
+                `;
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            if (email && password) {
+                state.user = { email };
+                state.page = "details";
+                render();
+            }
+        }
+
+        function handleDetailsSubmit() {
+            const name = document.getElementById("name").value;
+            const designation = document.getElementById("designation").value;
+            const team = document.getElementById("team").value;
+            const baseTown = document.getElementById("baseTown").value;
+            const date = document.getElementById("date").value;
+            const cell = document.getElementById("cell").value;
+            if (name && designation && team && baseTown && date && cell) {
+                state.user = { ...state.user, name, designation, team, baseTown, date, cell };
+                state.page = "bookSelection";
+                render();
+            }
+        }
+
+        function selectBook(bookId) {
+            state.selectedBook = books.find(book => book.id === bookId);
+            state.currentSlide = 0;
+            state.currentQuestion = 0;
+            state.quizAnswers = {};
+            state.score = null;
+            state.page = "summary";
+            render();
+        }
+
+        function setSlide(slide) {
+            if (slide >= 0 && slide < state.selectedBook.summary.length) {
+                state.currentSlide = slide;
+                render();
+            }
+        }
+
+        function setPage(page) {
+            state.page = page;
+            state.currentQuestion = 0; // Reset question index when entering quiz
+            render();
+        }
+
+        function handleQuizAnswer(questionIndex, answer) {
+            state.quizAnswers = { ...state.quizAnswers, [questionIndex]: answer };
+            if (state.currentQuestion < state.selectedBook.quiz.length - 1) {
+                state.currentQuestion++;
+                render();
+            } else {
+                calculateScore();
+            }
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            state.selectedBook.quiz.forEach((q, i) => {
+                if (state.quizAnswers[i] === q.correct) correct++;
+            });
+            const percentage = (correct / 20) * 100;
+            let grade = "";
+            let encouragement = "";
+            if (percentage > 90) { grade = "A1"; encouragement = "Outstanding! You're a soft skills superstar!"; }
+            else if (percentage >= 80) { grade = "A"; encouragement = "Excellent work! Keep shining!"; }
+            else if (percentage >= 70) { grade = "B1"; encouragement = "Great effort! You're on the right track!"; }
+            else if (percentage >= 60) { grade = "B"; encouragement = "Good job! A bit more practice will make you perfect!"; }
+            else { grade = "C"; encouragement = "Keep learning! You can improve with more study!"; }
+            state.score = { percentage, grade, encouragement };
+            state.page = "scorecard";
+            render();
+        }
+
+        function generatePDF() {
+            const doc = new jsPDF();
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(24);
+            doc.setTextColor(128, 0, 128);
+            doc.text("PharmaSoftSkills Scorecard", 105, 20, { align: "center" });
+            doc.setFontSize(16);
+            doc.setTextColor(0);
+            doc.text(`Name: ${state.user.name}`, 20, 50);
+            doc.text(`Book: ${state.selectedBook.title}`, 20, 60);
+            doc.text(`Score: ${state.score.percentage}%`, 20, 80);
+            doc.text(`Grade: ${state.score.grade}`, 20, 90);
+            doc.setFont("helvetica", "italic");
+            doc.text(state.score.encouragement, 20, 100);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 120);
+            // Floral border simulation
+            doc.setDrawColor(128, 0, 128);
+            doc.setLineWidth(1);
+            doc.rect(10, 10, 190, 277);
+            doc.setLineWidth(0.5);
+            doc.setDrawColor(0, 128, 128);
+            doc.rect(12, 12, 186, 273);
+            doc.save("scorecard.pdf");
+        }
+
+        // Initial render
+        render();
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</body>
+</html>
