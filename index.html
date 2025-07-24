@@ -46,6 +46,20 @@
             height: 150px;
             object-fit: cover;
         }
+        .tab {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 5px rgba(128, 128, 128, 0.5);
+        }
+        .tab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(128, 128, 128, 0.8);
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -69,6 +83,7 @@
                 title: "The 7 Habits of Highly Effective People",
                 author: "Stephen R. Covey",
                 thumbnail: "1a",
+                category: "Soft Skills",
                 summary: [
                     {
                         title: "Be Proactive",
@@ -143,6 +158,7 @@
                 title: "Atomic Habits",
                 author: "James Clear",
                 thumbnail: "2b",
+                category: "Soft Skills",
                 summary: [
                     {
                         title: "The Power of 1%",
@@ -217,6 +233,7 @@
                 title: "The Compound Effect",
                 author: "Darren Hardy",
                 thumbnail: "3b",
+                category: "Soft Skills",
                 summary: [
                     {
                         title: "Small Choices Matter",
@@ -287,6 +304,7 @@
                 title: "How to Win Friends & Influence People",
                 author: "Dale Carnegie",
                 thumbnail: "4b",
+                category: "Soft Skills",
                 summary: [
                     {
                         title: "Smile Genuinely",
@@ -357,266 +375,571 @@
                 title: "Never Split the Difference",
                 author: "Chris Voss",
                 thumbnail: "5b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Negotiation Principle ${i + 1}`,
-                    content: [`Comprehensive paragraph summarizing key negotiation concept ${i + 1} from the book, detailing strategies like tactical empathy or mirroring.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What is a key strategy in negotiation principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option B"
-                }))
+                category: "Soft Skills",
+                summary: [
+                    {
+                        title: "Negotiation Principle 1",
+                        content: ["Tactical empathy involves understanding and acknowledging the emotions of the other party to build trust. Chris Voss emphasizes listening to uncover their underlying needs, using phrases like 'It seems like...' to validate feelings, which sets the stage for effective negotiation by fostering a collaborative atmosphere."]
+                    },
+                    {
+                        title: "Negotiation Principle 2",
+                        content: ["Mirroring is a technique to encourage the other party to reveal more by repeating the last one to three words they said with an upward inflection. Voss highlights this subtle tactic builds rapport and prompts deeper conversation, helping negotiators gather critical information."]
+                    },
+                    {
+                        title: "Negotiation Principle 3",
+                        content: ["Calibrated questions start with 'how' or 'what' to guide the other party toward solving their own problems. Voss explains this shifts control to them, encouraging self-reflection and revealing their priorities, which can lead to mutually beneficial agreements."]
+                    },
+                    {
+                        title: "Negotiation Principle 4",
+                        content: ["Bargaining is about conceding strategically to gain concessions in return. Voss advises offering small, deliberate compromises while asking for something valuable, ensuring both sides feel they’ve won, thus maintaining a positive negotiation dynamic."]
+                    },
+                    {
+                        title: "Negotiation Principle 5",
+                        content: ["The 'yes' mindset can be a trap; instead, aim for 'no' to empower the other party. Voss notes that a 'no' gives them control and safety, opening the door to honest dialogue and uncovering true objections or needs."]
+                    },
+                    {
+                        title: "Negotiation Principle 6",
+                        content: ["Labeling emotions involves naming what the other party might be feeling, like 'It sounds like you’re frustrated.' Voss stresses this defuses tension and shows understanding, making the negotiation process smoother and more productive."]
+                    },
+                    {
+                        title: "Negotiation Principle 7",
+                        content: ["Effective pauses create space for the other party to fill with information. Voss recommends using silence strategically after key points to encourage them to reveal more, enhancing your leverage in the discussion."]
+                    },
+                    {
+                        title: "Negotiation Principle 8",
+                        content: ["Accusation audit preempts objections by acknowledging potential criticisms upfront, like 'You might think I’m being unreasonable.' Voss explains this disarms the other party, reducing defensiveness and paving the way for agreement."]
+                    },
+                    {
+                        title: "Negotiation Principle 9",
+                        content: ["Bargaining for the 'black swan' involves uncovering hidden information that shifts the negotiation. Voss advocates digging for overlooked details or motivations, which can provide a decisive advantage in reaching a favorable outcome."]
+                    },
+                    {
+                        title: "Negotiation Principle 10",
+                        content: ["Closing with confidence requires summarizing agreed points and securing commitment. Voss advises reinforcing the deal with clear terms and a handshake or verbal agreement, ensuring both parties leave satisfied with the resolution."]
+                    }
+                ],
+                quiz: [
+                    { question: "What does tactical empathy build in negotiations?", options: ["Trust", "Conflict", "Distance", "Arguments"], correct: "Trust" },
+                    { question: "What technique encourages deeper conversation?", options: ["Criticism", "Mirroring", "Silence", "Demanding"], correct: "Mirroring" },
+                    { question: "What do calibrated questions start with?", options: ["Why", "How/What", "When", "Where"], correct: "How/What" },
+                    { question: "How should you concede in bargaining?", options: ["Randomly", "Strategically", "Avoiding", "Ignoring"], correct: "Strategically" },
+                    { question: "What mindset empowers the other party?", options: ["Yes", "No", "Maybe", "Silence"], correct: "No" },
+                    { question: "What does labeling emotions do?", options: ["Increases tension", "Defuses tension", "Ends talks", "Confuses"], correct: "Defuses tension" },
+                    { question: "What does pausing encourage?", options: ["Quick answers", "More information", "Silence", "Conflict"], correct: "More information" },
+                    { question: "What preempts objections?", options: ["Accusation audit", "Criticism", "Ignoring", "Arguing"], correct: "Accusation audit" },
+                    { question: "What uncovers hidden leverage?", options: ["Black swan", "Mirroring", "Pausing", "Labeling"], correct: "Black swan" },
+                    { question: "How do you close with confidence?", options: ["Summarize agreement", "End abruptly", "Avoid terms", "Ignore"], correct: "Summarize agreement" },
+                    { question: "What builds rapport in talks?", options: ["Mirroring", "Criticism", "Silence", "Demanding"], correct: "Mirroring" },
+                    { question: "What guides problem-solving?", options: ["Yes/No", "How/What", "When/Where", "Why"], correct: "How/What" },
+                    { question: "What ensures mutual gain?", options: ["Random concessions", "Strategic concessions", "No concessions", "Ignoring"], correct: "Strategic concessions" },
+                    { question: "What gives control to others?", options: ["Yes", "No", "Maybe", "Demand"], correct: "No" },
+                    { question: "What reduces defensiveness?", options: ["Labeling", "Accusation audit", "Criticism", "Arguing"], correct: "Accusation audit" },
+                    { question: "What enhances dialogue?", options: ["Pausing", "Talking", "Ignoring", "Demanding"], correct: "Pausing" },
+                    { question: "What shifts negotiation dynamics?", options: ["Black swan", "Mirroring", "Labeling", "Pausing"], correct: "Black swan" },
+                    { question: "What validates emotions?", options: ["Criticism", "Tactical empathy", "Silence", "Demanding"], correct: "Tactical empathy" },
+                    { question: "What secures commitment?", options: ["Ignoring terms", "Summarizing terms", "Ending talks", "Arguing"], correct: "Summarizing terms" },
+                    { question: "What fosters collaboration?", options: ["No empathy", "Tactical empathy", "Criticism", "Silence"], correct: "Tactical empathy" }
+                ]
             },
             {
                 id: 6,
                 title: "The Five Dysfunctions of a Team",
                 author: "Patrick Lencioni",
                 thumbnail: "6b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Team Dysfunction ${i + 1}`,
-                    content: [`Paragraph detailing dysfunction or solution ${i + 1}, such as building trust or embracing conflict.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What addresses team dysfunction ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option C"
-                }))
+                category: "Soft Skills",
+                summary: [
+                    {
+                        title: "Absence of Trust",
+                        content: ["The first dysfunction is the absence of trust, where team members hesitate to be vulnerable. Lencioni stresses that building trust through openness about weaknesses and mistakes is essential, creating a foundation for effective collaboration and reducing fear of judgment."]
+                    },
+                    {
+                        title: "Fear of Conflict",
+                        content: ["Teams avoiding conflict stifle progress, as the second dysfunction. Lencioni advocates for constructive debates to surface ideas, encouraging a culture where disagreement is seen as healthy and necessary for innovation."]
+                    },
+                    {
+                        title: "Lack of Commitment",
+                        content: ["Without commitment, the third dysfunction emerges from unclear decisions. Lencioni suggests achieving buy-in through clear goals and consensus, ensuring team members are aligned and motivated to act."]
+                    },
+                    {
+                        title: "Avoidance of Accountability",
+                        content: ["The fourth dysfunction is avoiding accountability, leading to low standards. Lencioni recommends peer-to-peer accountability to maintain performance, where team members hold each other responsible for results."]
+                    },
+                    {
+                        title: "Inattention to Results",
+                        content: ["The fifth dysfunction is inattention to results, focusing on individual goals over team success. Lencioni emphasizes prioritizing collective outcomes, aligning efforts to achieve shared objectives and enhance team cohesion."]
+                    },
+                    {
+                        title: "Building Trust",
+                        content: ["To counter the first dysfunction, Lencioni proposes team-building exercises and personal disclosures to foster trust, creating an environment where vulnerability is a strength rather than a risk."]
+                    },
+                    {
+                        title: "Embracing Conflict",
+                        content: ["Addressing the second dysfunction, Lencioni suggests training in conflict resolution to turn debates into productive discussions, ensuring all voices are heard and respected."]
+                    },
+                    {
+                        title: "Securing Commitment",
+                        content: ["For the third dysfunction, Lencioni recommends clear communication of decisions and deadlines, ensuring everyone understands and commits to the team’s direction."]
+                    },
+                    {
+                        title: "Enforcing Accountability",
+                        content: ["To tackle the fourth dysfunction, Lencioni advises setting clear expectations and regular check-ins, empowering team members to call out underperformance constructively."]
+                    },
+                    {
+                        title: "Focusing on Results",
+                        content: ["To overcome the fifth dysfunction, Lencioni suggests tracking team metrics and celebrating collective wins, reinforcing a results-oriented culture that benefits all."]
+                    }
+                ],
+                quiz: [
+                    { question: "What is the first team dysfunction?", options: ["Fear of conflict", "Absence of trust", "Lack of commitment", "Avoidance of accountability"], correct: "Absence of trust" },
+                    { question: "What stifles team progress?", options: ["Trust", "Fear of conflict", "Commitment", "Accountability"], correct: "Fear of conflict" },
+                    { question: "What causes lack of commitment?", options: ["Clear goals", "Unclear decisions", "Trust", "Results"], correct: "Unclear decisions" },
+                    { question: "What leads to low standards?", options: ["Accountability", "Avoidance of accountability", "Trust", "Conflict"], correct: "Avoidance of accountability" },
+                    { question: "What focuses on individual goals?", options: ["Team results", "Inattention to results", "Trust", "Commitment"], correct: "Inattention to results" },
+                    { question: "How do you build trust?", options: ["Hide weaknesses", "Openness", "Avoid conflict", "Ignore results"], correct: "Openness" },
+                    { question: "What turns debates productive?", options: ["Avoiding conflict", "Conflict resolution", "Silence", "Criticism"], correct: "Conflict resolution" },
+                    { question: "What ensures buy-in?", options: ["Unclear goals", "Clear goals", "No communication", "Ignoring"], correct: "Clear goals" },
+                    { question: "How do you enforce accountability?", options: ["Peer checks", "No standards", "Avoid feedback", "Ignore performance"], correct: "Peer checks" },
+                    { question: "What reinforces team success?", options: ["Individual wins", "Collective wins", "No tracking", "Conflict"], correct: "Collective wins" },
+                    { question: "What reduces fear of judgment?", options: ["Trust", "Conflict", "No accountability", "Individual focus"], correct: "Trust" },
+                    { question: "What encourages healthy debate?", options: ["Avoiding conflict", "Embracing conflict", "Silence", "Criticism"], correct: "Embracing conflict" },
+                    { question: "What aligns team efforts?", options: ["Unclear decisions", "Commitment", "No goals", "Individual focus"], correct: "Commitment" },
+                    { question: "What maintains performance?", options: ["No accountability", "Accountability", "Ignoring results", "Conflict"], correct: "Accountability" },
+                    { question: "What prioritizes team outcomes?", options: ["Individual goals", "Team results", "No tracking", "Silence"], correct: "Team results" },
+                    { question: "What fosters vulnerability?", options: ["Hiding mistakes", "Openness", "Avoiding trust", "Conflict"], correct: "Openness" },
+                    { question: "What improves conflict handling?", options: ["Resolution training", "Ignoring", "No debate", "Criticism"], correct: "Resolution training" },
+                    { question: "What ensures team alignment?", options: ["Unclear communication", "Clear communication", "No goals", "Individual focus"], correct: "Clear communication" },
+                    { question: "What supports peer responsibility?", options: ["No checks", "Regular checks", "Ignoring performance", "Conflict"], correct: "Regular checks" },
+                    { question: "What enhances cohesion?", options: ["Individual wins", "Collective metrics", "No tracking", "Silence"], correct: "Collective metrics" }
+                ]
             },
             {
                 id: 7,
                 title: "Leaders Eat Last",
                 author: "Simon Sinek",
                 thumbnail: "7b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Leadership Principle ${i + 1}`,
-                    content: [`Paragraph on leadership concept ${i + 1}, like creating safety or fostering cooperation.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What is the focus of leadership principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option A"
-                }))
+                category: "Soft Skills",
+                summary: [
+                    {
+                        title: "Leadership Principle 1",
+                        content: ["Creating a circle of safety fosters trust within teams. Sinek argues that leaders who prioritize their team’s well-being over personal gain build a protective environment, enhancing loyalty and collaboration."]
+                    },
+                    {
+                        title: "Leadership Principle 2",
+                        content: ["Self-interest undermines leadership; serving others builds it. Sinek emphasizes that leaders who sacrifice for their team inspire commitment and create a culture of mutual support."]
+                    },
+                    {
+                        title: "Leadership Principle 3",
+                        content: ["Endorphins drive short-term effort, while dopamine rewards achievement. Sinek explains that balancing these chemicals through recognition and challenges motivates sustained performance."]
+                    },
+                    {
+                        title: "Leadership Principle 4",
+                        content: ["Serotonin boosts status through recognition. Sinek notes that leaders who celebrate team successes elevate morale and reinforce a sense of belonging."]
+                    },
+                    {
+                        title: "Leadership Principle 5",
+                        content: ["Oxytocin builds trust through human connection. Sinek highlights that personal interactions, like shared meals, strengthen team bonds and enhance cooperation."]
+                    },
+                    {
+                        title: "Leadership Principle 6",
+                        content: ["Cortisol, the stress hormone, harms when unchecked. Sinek warns that a lack of safety increases stress, reducing productivity and team cohesion."]
+                    },
+                    {
+                        title: "Leadership Principle 7",
+                        content: ["Long-term thinking beats short-term gains. Sinek advocates for leaders to focus on future stability, ensuring sustainable growth for their teams."]
+                    },
+                    {
+                        title: "Leadership Principle 8",
+                        content: ["Empathy in leadership bridges gaps. Sinek stresses understanding team needs to address challenges, fostering a supportive and adaptive environment."]
+                    },
+                    {
+                        title: "Leadership Principle 9",
+                        content: ["Consistency builds credibility. Sinek suggests that reliable actions over time earn trust, making leaders effective stewards of their teams."]
+                    },
+                    {
+                        title: "Leadership Principle 10",
+                        content: ["Protecting the weak strengthens the whole. Sinek argues that supporting struggling team members enhances overall resilience and success."]
+                    }
+                ],
+                quiz: [
+                    { question: "What fosters team trust?", options: ["Self-interest", "Circle of safety", "Short-term gains", "Stress"], correct: "Circle of safety" },
+                    { question: "What builds leadership?", options: ["Serving others", "Self-focus", "Ignoring team", "Stress"], correct: "Serving others" },
+                    { question: "What drives short-term effort?", options: ["Dopamine", "Endorphins", "Serotonin", "Oxytocin"], correct: "Endorphins" },
+                    { question: "What boosts morale?", options: ["Recognition", "Stress", "Self-interest", "Ignoring"], correct: "Recognition" },
+                    { question: "What builds human connection?", options: ["Cortisol", "Oxytocin", "Dopamine", "Stress"], correct: "Oxytocin" },
+                    { question: "What harms productivity?", options: ["Trust", "Cortisol", "Safety", "Recognition"], correct: "Cortisol" },
+                    { question: "What ensures growth?", options: ["Short-term gains", "Long-term thinking", "Self-interest", "Stress"], correct: "Long-term thinking" },
+                    { question: "What bridges team gaps?", options: ["Empathy", "Ignoring", "Cortisol", "Self-focus"], correct: "Empathy" },
+                    { question: "What earns trust?", options: ["Inconsistency", "Consistency", "Stress", "Self-interest"], correct: "Consistency" },
+                    { question: "What strengthens resilience?", options: ["Ignoring weak", "Protecting weak", "Cortisol", "Short-term"], correct: "Protecting weak" },
+                    { question: "What enhances loyalty?", options: ["Self-interest", "Circle of safety", "Stress", "Ignoring"], correct: "Circle of safety" },
+                    { question: "What inspires commitment?", options: ["Serving others", "Self-focus", "Cortisol", "Short-term"], correct: "Serving others" },
+                    { question: "What rewards achievement?", options: ["Endorphins", "Dopamine", "Oxytocin", "Cortisol"], correct: "Dopamine" },
+                    { question: "What elevates status?", options: ["Stress", "Serotonin", "Cortisol", "Ignoring"], correct: "Serotonin" },
+                    { question: "What strengthens bonds?", options: ["Oxytocin", "Cortisol", "Dopamine", "Stress"], correct: "Oxytocin" },
+                    { question: "What reduces cohesion?", options: ["Safety", "Cortisol", "Trust", "Recognition"], correct: "Cortisol" },
+                    { question: "What ensures stability?", options: ["Short-term", "Long-term thinking", "Self-interest", "Stress"], correct: "Long-term thinking" },
+                    { question: "What addresses challenges?", options: ["Ignoring", "Empathy", "Cortisol", "Self-focus"], correct: "Empathy" },
+                    { question: "What builds credibility?", options: ["Inconsistency", "Consistency", "Stress", "Ignoring"], correct: "Consistency" },
+                    { question: "What supports the team?", options: ["Ignoring weak", "Protecting weak", "Cortisol", "Self-interest"], correct: "Protecting weak" }
+                ]
             },
             {
                 id: 8,
                 title: "The Charisma Myth",
                 author: "Olivia Fox Cabane",
                 thumbnail: "8b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Charisma Principle ${i + 1}`,
-                    content: [`Paragraph on charisma concept ${i + 1}, such as projecting presence or exuding warmth.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What enhances charisma in principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option B"
-                }))
+                category: "Soft Skills",
+                summary: [
+                    {
+                        title: "Charisma Principle 1",
+                        content: ["Presence is the foundation of charisma, requiring full attention to the moment. Cabane emphasizes eliminating distractions to connect authentically, making others feel valued and engaged."]
+                    },
+                    {
+                        title: "Charisma Principle 2",
+                        content: ["Warmth signals goodwill and acceptance. Cabane suggests using open body language and a friendly tone to project approachability, enhancing interpersonal connections."]
+                    },
+                    {
+                        title: "Charisma Principle 3",
+                        content: ["Power conveys competence and confidence. Cabane advises maintaining good posture and assertive speech to establish authority, boosting perceived influence."]
+                    },
+                    {
+                        title: "Charisma Principle 4",
+                        content: ["Good eye contact builds trust. Cabane recommends holding eye contact slightly longer than usual to show interest, strengthening rapport in interactions."]
+                    },
+                    {
+                        title: "Charisma Principle 5",
+                        content: ["Smiling enhances likability. Cabane notes that a genuine smile, even in challenging situations, makes you more relatable and approachable to others."]
+                    },
+                    {
+                        title: "Charisma Principle 6",
+                        content: ["Vocal variety keeps attention. Cabane suggests varying pitch and pace to maintain engagement, making communication dynamic and memorable."]
+                    },
+                    {
+                        title: "Charisma Principle 7",
+                        content: ["Empathy deepens connections. Cabane highlights listening with intent to understand, reflecting emotions to build stronger, more meaningful relationships."]
+                    },
+                    {
+                        title: "Charisma Principle 8",
+                        content: ["Confidence overcomes self-doubt. Cabane advises reframing negative thoughts to project assurance, enhancing your charismatic presence."]
+                    },
+                    {
+                        title: "Charisma Principle 9",
+                        content: ["Gratitude boosts positivity. Cabane recommends expressing thanks to elevate your mood and others’, creating a contagious positive atmosphere."]
+                    },
+                    {
+                        title: "Charisma Principle 10",
+                        content: ["Adaptability suits the audience. Cabane stresses adjusting your style to fit the context, ensuring charisma resonates with diverse individuals."]
+                    }
+                ],
+                quiz: [
+                    { question: "What is the foundation of charisma?", options: ["Warmth", "Presence", "Power", "Confidence"], correct: "Presence" },
+                    { question: "What signals goodwill?", options: ["Coldness", "Warmth", "Power", "Silence"], correct: "Warmth" },
+                    { question: "What conveys competence?", options: ["Weakness", "Power", "Warmth", "Ignoring"], correct: "Power" },
+                    { question: "What builds trust?", options: ["Avoiding eyes", "Good eye contact", "Silence", "Coldness"], correct: "Good eye contact" },
+                    { question: "What enhances likability?", options: ["Frowning", "Smiling", "Power", "Ignoring"], correct: "Smiling" },
+                    { question: "What keeps attention?", options: ["Monotone", "Vocal variety", "Silence", "Coldness"], correct: "Vocal variety" },
+                    { question: "What deepens connections?", options: ["Ignoring", "Empathy", "Power", "Silence"], correct: "Empathy" },
+                    { question: "What overcomes self-doubt?", options: ["Confidence", "Warmth", "Ignoring", "Coldness"], correct: "Confidence" },
+                    { question: "What boosts positivity?", options: ["Gratitude", "Power", "Silence", "Coldness"], correct: "Gratitude" },
+                    { question: "What suits the audience?", options: ["Rigidity", "Adaptability", "Power", "Ignoring"], correct: "Adaptability" },
+                    { question: "What connects authentically?", options: ["Distraction", "Presence", "Coldness", "Silence"], correct: "Presence" },
+                    { question: "What projects approachability?", options: ["Warmth", "Power", "Ignoring", "Coldness"], correct: "Warmth" },
+                    { question: "What establishes authority?", options: ["Weakness", "Power", "Warmth", "Silence"], correct: "Power" },
+                    { question: "What shows interest?", options: ["Avoiding eyes", "Eye contact", "Coldness", "Ignoring"], correct: "Eye contact" },
+                    { question: "What makes you relatable?", options: ["Frowning", "Smiling", "Power", "Silence"], correct: "Smiling" },
+                    { question: "What makes communication dynamic?", options: ["Monotone", "Vocal variety", "Coldness", "Ignoring"], correct: "Vocal variety" },
+                    { question: "What reflects emotions?", options: ["Ignoring", "Empathy", "Power", "Silence"], correct: "Empathy" },
+                    { question: "What enhances assurance?", options: ["Doubt", "Confidence", "Coldness", "Ignoring"], correct: "Confidence" },
+                    { question: "What creates a positive vibe?", options: ["Gratitude", "Power", "Silence", "Coldness"], correct: "Gratitude" },
+                    { question: "What adjusts to context?", options: ["Rigidity", "Adaptability", "Ignoring", "Coldness"], correct: "Adaptability" }
+                ]
             },
             {
                 id: 9,
                 title: "Thinking in Systems",
                 author: "Donella H. Meadows",
                 thumbnail: "9b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Systems Concept ${i + 1}`,
-                    content: [`Paragraph on systems thinking principle ${i + 1}, like feedback loops or leverage points.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What is a key aspect of systems concept ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option C"
-                }))
+                category: "Soft Skills",
+                summary: [
+                    {
+                        title: "Systems Concept 1",
+                        content: ["Understanding feedback loops is key to systems thinking. Meadows explains that reinforcing loops amplify change while balancing loops stabilize systems, helping predict and manage complex dynamics."]
+                    },
+                    {
+                        title: "Systems Concept 2",
+                        content: ["Stocks and flows represent system components. Meadows describes stocks as accumulated quantities and flows as rates of change, providing a framework to analyze system behavior."]
+                    },
+                    {
+                        title: "Systems Concept 3",
+                        content: ["Leverage points are strategic intervention spots. Meadows identifies places like parameters or goals where small changes can yield significant system improvements."]
+                    },
+                    {
+                        title: "Systems Concept 4",
+                        content: ["Delays affect system responses. Meadows notes that time lags between actions and outcomes can lead to overshoots or oscillations, requiring careful timing in interventions."]
+                    },
+                    {
+                        title: "Systems Concept 5",
+                        content: ["Nonlinear relationships challenge predictions. Meadows highlights that system behaviors often defy linear assumptions, necessitating adaptive management strategies."]
+                    },
+                    {
+                        title: "Systems Concept 6",
+                        content: ["Resilience ensures system survival. Meadows argues that diverse feedback and redundancy help systems withstand shocks, maintaining stability over time."]
+                    },
+                    {
+                        title: "Systems Concept 7",
+                        content: ["Boundaries define system scope. Meadows suggests setting clear limits to focus analysis, avoiding overwhelm while addressing relevant interactions."]
+                    },
+                    {
+                        title: "Systems Concept 8",
+                        content: ["Emergence arises from interactions. Meadows explains that complex behaviors emerge from simple rules, requiring a holistic view to understand system outcomes."]
+                    },
+                    {
+                        title: "Systems Concept 9",
+                        content: ["Adaptation drives evolution. Meadows emphasizes that systems evolve by learning from feedback, enabling long-term sustainability and growth."]
+                    },
+                    {
+                        title: "Systems Concept 10",
+                        content: ["Paradigms shape system thinking. Meadows asserts that underlying beliefs influence system design, making paradigm shifts critical for transformative change."]
+                    }
+                ],
+                quiz: [
+                    { question: "What amplifies change in systems?", options: ["Balancing loops", "Reinforcing loops", "Delays", "Boundaries"], correct: "Reinforcing loops" },
+                    { question: "What are stocks and flows?", options: ["Rules", "Quantities and rates", "Delays", "Paradigms"], correct: "Quantities and rates" },
+                    { question: "Where are leverage points?", options: ["Random spots", "Intervention spots", "Boundaries", "Delays"], correct: "Intervention spots" },
+                    { question: "What affects responses?", options: ["Loops", "Delays", "Stocks", "Paradigms"], correct: "Delays" },
+                    { question: "What challenges predictions?", options: ["Linear relationships", "Nonlinear relationships", "Stocks", "Boundaries"], correct: "Nonlinear relationships" },
+                    { question: "What ensures survival?", options: ["Resilience", "Delays", "Loops", "Paradigms"], correct: "Resilience" },
+                    { question: "What defines scope?", options: ["Emergence", "Boundaries", "Stocks", "Delays"], correct: "Boundaries" },
+                    { question: "What arises from interactions?", options: ["Delays", "Emergence", "Loops", "Paradigms"], correct: "Emergence" },
+                    { question: "What drives evolution?", options: ["Adaptation", "Stocks", "Boundaries", "Delays"], correct: "Adaptation" },
+                    { question: "What shapes thinking?", options: ["Paradigms", "Loops", "Stocks", "Emergence"], correct: "Paradigms" },
+                    { question: "What stabilizes systems?", options: ["Reinforcing loops", "Balancing loops", "Delays", "Stocks"], correct: "Balancing loops" },
+                    { question: "What analyzes behavior?", options: ["Paradigms", "Stocks and flows", "Emergence", "Boundaries"], correct: "Stocks and flows" },
+                    { question: "What yields improvements?", options: ["Random changes", "Leverage points", "Delays", "Loops"], correct: "Leverage points" },
+                    { question: "What causes oscillations?", options: ["Stocks", "Delays", "Boundaries", "Paradigms"], correct: "Delays" },
+                    { question: "What requires adaptation?", options: ["Linear systems", "Nonlinear systems", "Stocks", "Loops"], correct: "Nonlinear systems" },
+                    { question: "What withstands shocks?", options: ["Resilience", "Delays", "Emergence", "Paradigms"], correct: "Resilience" },
+                    { question: "What focuses analysis?", options: ["Emergence", "Boundaries", "Stocks", "Loops"], correct: "Boundaries" },
+                    { question: "What emerges from rules?", options: ["Delays", "Emergence", "Stocks", "Paradigms"], correct: "Emergence" },
+                    { question: "What enables growth?", options: ["Adaptation", "Boundaries", "Delays", "Loops"], correct: "Adaptation" },
+                    { question: "What influences design?", options: ["Stocks", "Paradigms", "Emergence", "Delays"], correct: "Paradigms" }
+                ]
             },
             {
                 id: 10,
                 title: "Give and Take",
                 author: "Adam M. Grant",
                 thumbnail: "10b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Giving Principle ${i + 1}`,
-                    content: [`Paragraph on giving concept ${i + 1}, like being a giver or fostering reciprocity.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What promotes giving in principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option A"
-                }))
+                category: "Soft Skills",
+                summary: [
+                    {
+                        title: "Giving Principle 1",
+                        content: ["Givers succeed by helping others without expecting immediate returns. Grant shows that this selfless approach builds networks and long-term success, contrasting with takers who prioritize personal gain."]
+                    },
+                    {
+                        title: "Giving Principle 2",
+                        content: ["Takers focus on self-interest, often harming relationships. Grant warns that this short-term strategy erodes trust, leading to isolation and reduced influence over time."]
+                    },
+                    {
+                        title: "Giving Principle 3",
+                        content: ["Matchers seek fairness in exchanges. Grant explains that this balanced approach maintains equity but may limit the exponential benefits givers achieve through generosity."]
+                    },
+                    {
+                        title: "Giving Principle 4",
+                        content: ["Reciprocity amplifies giving. Grant highlights that acts of help often inspire others to give back, creating a virtuous cycle that benefits the entire network."]
+                    },
+                    {
+                        title: "Giving Principle 5",
+                        content: ["Powerless communication engages others. Grant suggests using tentative language to invite collaboration, making givers more effective in influencing teams."]
+                    },
+                    {
+                        title: "Giving Principle 6",
+                        content: ["Five-minute favors build goodwill. Grant recommends small, quick acts of help to strengthen relationships, enhancing personal and professional credibility."]
+                    },
+                    {
+                        title: "Giving Principle 7",
+                        content: ["Dormant ties offer fresh perspectives. Grant advises reconnecting with old contacts to access new ideas, leveraging past relationships for current success."]
+                    },
+                    {
+                        title: "Giving Principle 8",
+                        content: ["Givers avoid burnout by setting boundaries. Grant stresses that strategic giving, with limits, sustains long-term impact without exhausting resources."]
+                    },
+                    {
+                        title: "Giving Principle 9",
+                        content: ["Team giving enhances performance. Grant notes that collaborative generosity within teams boosts morale and productivity, creating a supportive culture."]
+                    },
+                    {
+                        title: "Giving Principle 10",
+                        content: ["Long-term giving pays off. Grant argues that consistent generosity over time compounds into significant personal and organizational success."]
+                    }
+                ],
+                quiz: [
+                    { question: "What leads to long-term success?", options: ["Taking", "Giving", "Matching", "Ignoring"], correct: "Giving" },
+                    { question: "What harms relationships?", options: ["Giving", "Taking", "Matching", "Helping"], correct: "Taking" },
+                    { question: "What seeks fairness?", options: ["Giving", "Taking", "Matching", "Ignoring"], correct: "Matching" },
+                    { question: "What amplifies giving?", options: ["Self-interest", "Reciprocity", "Taking", "Ignoring"], correct: "Reciprocity" },
+                    { question: "What engages others?", options: ["Powerless communication", "Demanding", "Taking", "Ignoring"], correct: "Powerless communication" },
+                    { question: "What builds goodwill?", options: ["Five-minute favors", "Taking", "Matching", "Ignoring"], correct: "Five-minute favors" },
+                    { question: "What offers new ideas?", options: ["New ties", "Dormant ties", "Taking", "Ignoring"], correct: "Dormant ties" },
+                    { question: "What prevents burnout?", options: ["No boundaries", "Boundaries", "Taking", "Ignoring"], correct: "Boundaries" },
+                    { question: "What enhances team performance?", options: ["Individual giving", "Team giving", "Taking", "Ignoring"], correct: "Team giving" },
+                    { question: "What pays off over time?", options: ["Short-term giving", "Long-term giving", "Taking", "Ignoring"], correct: "Long-term giving" },
+                    { question: "What builds networks?", options: ["Giving", "Taking", "Matching", "Ignoring"], correct: "Giving" },
+                    { question: "What erodes trust?", options: ["Giving", "Taking", "Matching", "Helping"], correct: "Taking" },
+                    { question: "What maintains equity?", options: ["Giving", "Taking", "Matching", "Ignoring"], correct: "Matching" },
+                    { question: "What creates a cycle?", options: ["Self-interest", "Reciprocity", "Taking", "Ignoring"], correct: "Reciprocity" },
+                    { question: "What invites collaboration?", options: ["Demanding", "Powerless communication", "Taking", "Ignoring"], correct: "Powerless communication" },
+                    { question: "What strengthens credibility?", options: ["Five-minute favors", "Taking", "Matching", "Ignoring"], correct: "Five-minute favors" },
+                    { question: "What leverages past contacts?", options: ["New ties", "Dormant ties", "Taking", "Ignoring"], correct: "Dormant ties" },
+                    { question: "What sustains impact?", options: ["No boundaries", "Boundaries", "Taking", "Ignoring"], correct: "Boundaries" },
+                    { question: "What boosts morale?", options: ["Individual giving", "Team giving", "Taking", "Ignoring"], correct: "Team giving" },
+                    { question: "What compounds success?", options: ["Short-term giving", "Long-term giving", "Taking", "Ignoring"], correct: "Long-term giving" }
+                ]
             },
             {
                 id: 11,
                 title: "Outliers",
                 author: "Malcolm Gladwell",
                 thumbnail: "11b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Success Factor ${i + 1}`,
-                    content: [`Paragraph on success concept ${i + 1}, like the 10,000-hour rule or opportunity.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What contributes to success in factor ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option B"
-                }))
+                category: "Top Selling Books",
+                summary: [
+                    {
+                        title: "Success Factor 1",
+                        content: ["The 10,000-hour rule suggests mastery requires extensive practice. Gladwell argues that exceptional success, like in music or sports, stems from deliberate effort over time, not just talent."]
+                    },
+                    {
+                        title: "Success Factor 2",
+                        content: ["Cultural legacy shapes outcomes. Gladwell explores how historical practices, like rice farming, influence work ethic and success across generations."]
+                    },
+                    {
+                        title: "Success Factor 3",
+                        content: ["Opportunity drives achievement. Gladwell highlights that being in the right place at the right time, such as birth year, can unlock significant advantages."]
+                    },
+                    {
+                        title: "Success Factor 4",
+                        content: ["Family background matters. Gladwell notes that support and resources from family can provide a head start, shaping long-term success trajectories."]
+                    },
+                    {
+                        title: "Success Factor 5",
+                        content: ["Community support enhances potential. Gladwell emphasizes that a nurturing environment boosts individual growth, contributing to outlier status."]
+                    },
+                    {
+                        title: "Success Factor 6",
+                        content: ["Education amplifies skills. Gladwell argues that access to quality education accelerates learning, playing a key role in achieving extraordinary results."]
+                    },
+                    {
+                        title: "Success Factor 7",
+                        content: ["Timing is critical. Gladwell points out that historical timing, like technological booms, can create unique opportunities for success."]
+                    },
+                    {
+                        title: "Success Factor 8",
+                        content: ["Persistence beats talent alone. Gladwell stresses that relentless effort, even without innate ability, can lead to remarkable achievements."]
+                    },
+                    {
+                        title: "Success Factor 9",
+                        content: ["Social connections matter. Gladwell suggests that networks and mentorships provide guidance, opening doors to exceptional opportunities."]
+                    },
+                    {
+                        title: "Success Factor 10",
+                        content: ["Luck plays a role. Gladwell acknowledges that random chance, combined with preparation, often determines who becomes an outlier."]
+                    }
+                ],
+                quiz: [
+                    { question: "What requires 10,000 hours?", options: ["Talent", "Mastery", "Luck", "Timing"], correct: "Mastery" },
+                    { question: "What shapes work ethic?", options: ["Education", "Cultural legacy", "Luck", "Timing"], correct: "Cultural legacy" },
+                    { question: "What drives achievement?", options: ["Talent", "Opportunity", "Luck", "Education"], correct: "Opportunity" },
+                    { question: "What provides a head start?", options: ["Community", "Family background", "Timing", "Luck"], correct: "Family background" },
+                    { question: "What boosts growth?", options: ["Community support", "Talent", "Luck", "Education"], correct: "Community support" },
+                    { question: "What accelerates learning?", options: ["Timing", "Education", "Luck", "Community"], correct: "Education" },
+                    { question: "What creates advantages?", options: ["Talent", "Timing", "Luck", "Family"], correct: "Timing" },
+                    { question: "What beats talent?", options: ["Luck", "Persistence", "Education", "Community"], correct: "Persistence" },
+                    { question: "What opens doors?", options: ["Social connections", "Talent", "Luck", "Timing"], correct: "Social connections" },
+                    { question: "What determines outliers?", options: ["Talent", "Luck", "Education", "Persistence"], correct: "Luck" },
+                    { question: "What ensures mastery?", options: ["Practice", "Talent", "Luck", "Timing"], correct: "Practice" },
+                    { question: "What influences generations?", options: ["Cultural legacy", "Education", "Luck", "Community"], correct: "Cultural legacy" },
+                    { question: "What unlocks potential?", options: ["Talent", "Opportunity", "Luck", "Persistence"], correct: "Opportunity" },
+                    { question: "What shapes trajectories?", options: ["Family background", "Timing", "Luck", "Education"], correct: "Family background" },
+                    { question: "What nurtures potential?", options: ["Community support", "Talent", "Luck", "Timing"], correct: "Community support" },
+                    { question: "What enhances skills?", options: ["Education", "Luck", "Persistence", "Community"], correct: "Education" },
+                    { question: "What leverages history?", options: ["Timing", "Talent", "Luck", "Family"], correct: "Timing" },
+                    { question: "What leads to achievements?", options: ["Luck", "Persistence", "Talent", "Education"], correct: "Persistence" },
+                    { question: "What provides guidance?", options: ["Social connections", "Luck", "Timing", "Community"], correct: "Social connections" },
+                    { question: "What combines with preparation?", options: ["Talent", "Luck", "Education", "Persistence"], correct: "Luck" }
+                ]
             },
             {
                 id: 12,
                 title: "Talk Like TED",
                 author: "Carmine Gallo",
                 thumbnail: "12b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Presentation Skill ${i + 1}`,
-                    content: [`Paragraph on presentation concept ${i + 1}, like storytelling or engaging emotions.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What improves presentations in skill ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option C"
-                }))
-            },
-            {
-                id: 13,
-                title: "Getting Things Done",
-                author: "David Allen",
-                thumbnail: "13b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Productivity Principle ${i + 1}`,
-                    content: [`Paragraph on productivity concept ${i + 1}, like capturing tasks or clarifying actions.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What enhances productivity in principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option A"
-                }))
-            },
-            {
-                id: 14,
-                title: "Extreme Ownership",
-                author: "Jocko Willink",
-                thumbnail: "14b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Leadership Principle ${i + 1}`,
-                    content: [`Paragraph on leadership concept ${i + 1}, like taking ownership or simplifying plans.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What is emphasized in leadership principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option B"
-                }))
-            },
-            {
-                id: 15,
-                title: "Difficult Conversations",
-                author: "Douglas Stone",
-                thumbnail: "15b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Conversation Skill ${i + 1}`,
-                    content: [`Paragraph on conversation concept ${i + 1}, like separating intent or managing emotions.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What improves difficult conversations in skill ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option C"
-                }))
-            },
-            {
-                id: 16,
-                title: "Start with Why",
-                author: "Simon Sinek",
-                thumbnail: "16b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Purpose Principle ${i + 1}`,
-                    content: [`Paragraph on purpose concept ${i + 1}, like finding your why or inspiring action.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What drives purpose in principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option A"
-                }))
-            },
-            {
-                id: 17,
-                title: "The Mythical Man-Month",
-                author: "Frederick P. Brooks Jr.",
-                thumbnail: "17b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Project Management Principle ${i + 1}`,
-                    content: [`Paragraph on project management concept ${i + 1}, like avoiding manpower or simplifying designs.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What improves project management in principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option B"
-                }))
-            },
-            {
-                id: 18,
-                title: "The Subtle Art of Not Giving a F*ck",
-                author: "Mark Manson",
-                thumbnail: "18b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Life Principle ${i + 1}`,
-                    content: [`Paragraph on life concept ${i + 1}, like choosing priorities or embracing discomfort.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What is the focus of life principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option C"
-                }))
-            },
-            {
-                id: 19,
-                title: "Team of Teams",
-                author: "Stanley McChrystal",
-                thumbnail: "19b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Teamwork Principle ${i + 1}`,
-                    content: [`Paragraph on teamwork concept ${i + 1}, like adapting to complexity or empowering teams.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What enhances teamwork in principle ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option A"
-                }))
-            },
-            {
-                id: 20,
-                title: "HBR’s 10 Must Reads on Strengthening Your Soft Skills",
-                author: "Harvard Business Review",
-                thumbnail: "20b",
-                summary: Array(10).fill().map((_, i) => ({
-                    title: `Soft Skill ${i + 1}`,
-                    content: [`Paragraph on soft skill concept ${i + 1}, like communication or emotional intelligence.`]
-                })),
-                quiz: Array(20).fill().map((_, i) => ({
-                    question: `What improves soft skills in concept ${i + 1}?`,
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    correct: "Option B"
-                }))
-            },
-            // NEW_BOOKS_HERE: Add new book objects here to expand the library (up to 100 books).
-            // Example structure for a new book:
-            /*
-            {
-                id: 21,
-                title: "New Book Title",
-                author: "Author Name",
-                thumbnail: "21b",
+                category: "Top Selling Books",
                 summary: [
                     {
-                        title: "Chapter/Section Title",
-                        content: ["Summary content for the section."]
+                        title: "Presentation Skill 1",
+                        content: ["Emotional connection engages audiences. Gallo stresses storytelling to evoke emotions, making presentations memorable and impactful."]
                     },
-                    // Add up to 10 summary sections
+                    {
+                        title: "Presentation Skill 2",
+                        content: ["Novelty sparks interest. Gallo suggests introducing surprising facts or ideas to captivate listeners, keeping them engaged throughout."]
+                    },
+                    {
+                        title: "Presentation Skill 3",
+                        content: ["Passion drives delivery. Gallo highlights that enthusiastic speakers inspire audiences, conveying authenticity and energy."]
+                    },
+                    {
+                        title: "Presentation Skill 4",
+                        content: ["Simplicity aids understanding. Gallo recommends clear, concise messages to ensure ideas are easily grasped by all listeners."]
+                    },
+                    {
+                        title: "Presentation Skill 5",
+                        content: ["Visuals enhance impact. Gallo advises using compelling images or slides to reinforce points, boosting retention and interest."]
+                    },
+                    {
+                        title: "Presentation Skill 6",
+                        content: ["Humor lightens the mood. Gallo notes that well-timed jokes or anecdotes make presentations enjoyable and relatable."]
+                    },
+                    {
+                        title: "Presentation Skill 7",
+                        content: ["Data backs arguments. Gallo emphasizes using credible statistics to support claims, adding authority to the presentation."]
+                    },
+                    {
+                        title: "Presentation Skill 8",
+                        content: ["Memorable phrases stick. Gallo suggests crafting catchy lines to leave a lasting impression on the audience."]
+                    },
+                    {
+                        title: "Presentation Skill 9",
+                        content: ["Practice ensures fluency. Gallo stresses rehearsal to deliver smoothly, increasing confidence and effectiveness."]
+                    },
+                    {
+                        title: "Presentation Skill 10",
+                        content: ["Audience interaction engages. Gallo recommends involving listeners through questions or activities, fostering a dynamic experience."]
+                    }
                 ],
                 quiz: [
-                    {
-                        question: "Descriptive question about the book?",
-                        options: ["Option A", "Option B", "Option C", "Option D"],
-                        correct: "Option B"
-                    },
-                    // Add up to 20 quiz questions
+                    { question: "What engages audiences?", options: ["Facts", "Emotional connection", "Data", "Silence"], correct: "Emotional connection" },
+                    { question: "What sparks interest?", options: ["Routine", "Novelty", "Data", "Silence"], correct: "Novelty" },
+                    { question: "What drives delivery?", options: ["Calmness", "Passion", "Data", "Silence"], correct: "Passion" },
+                    { question: "What aids understanding?", options: ["Complexity", "Simplicity", "Data", "Silence"], correct: "Simplicity" },
+                    { question: "What enhances impact?", options: ["Text", "Visuals", "Data", "Silence"], correct: "Visuals" },
+                    { question: "What lightens mood?", options: ["Seriousness", "Humor", "Data", "Silence"], correct: "Humor" },
+                    { question: "What backs arguments?", options: ["Stories", "Data", "Silence", "Visuals"], correct: "Data" },
+                    { question: "What sticks in memory?", options: ["Long speeches", "Memorable phrases", "Data", "Silence"], correct: "Memorable phrases" },
+                    { question: "What ensures fluency?", options: ["No practice", "Practice", "Data", "Silence"], correct: "Practice" },
+                    { question: "What fosters dynamics?", options: ["Ignoring", "Audience interaction", "Data", "Silence"], correct: "Audience interaction" },
+                    { question: "What evokes emotions?", options: ["Facts", "Storytelling", "Data", "Silence"], correct: "Storytelling" },
+                    { question: "What captivates listeners?", options: ["Routine", "Novelty", "Silence", "Data"], correct: "Novelty" },
+                    { question: "What inspires listeners?", options: ["Calmness", "Passion", "Silence", "Data"], correct: "Passion" },
+                    { question: "What ensures clarity?", options: ["Complexity", "Simplicity", "Silence", "Data"], correct: "Simplicity" },
+                    { question: "What reinforces points?", options: ["Text", "Visuals", "Silence", "Data"], correct: "Visuals" },
+                    { question: "What makes enjoyable?", options: ["Seriousness", "Humor", "Silence", "Data"], correct: "Humor" },
+                    { question: "What adds authority?", options: ["Stories", "Data", "Silence", "Visuals"], correct: "Data" },
+                    { question: "How can you disrupt bad habits?", options: ["Make cues visible", "Make responses easy", "Make cues invisible", "Make rewards satisfying"], correct: "Make cues invisible" },
+                    { question: "What backs arguments?", options: ["Stories", "Data", "Silence", "Visuals"], correct: "Data" },
+                    { question: "What sticks in memory?", options: ["Long speeches", "Memorable phrases", "Data", "Silence"], correct: "Memorable phrases" },
+
                 ]
             },
-            */
+            // Add more books with appropriate categories as needed
         ];
 
         let state = {
@@ -631,8 +954,9 @@
             readingStartTime: null,
             readingEndTime: null,
             quizStartTime: null,
-            currentTime: 0, // New field for stopwatch
-            timerInterval: null // To store the interval ID
+            currentTime: 0,
+            timerInterval: null,
+            selectedCategory: null
         };
 
         // Function to format time in MM:SS
@@ -642,17 +966,30 @@
             return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
 
-        // Function to start or update the stopwatch
+        // Function to update the stopwatch without re-rendering the entire page
         function updateStopwatch() {
             if (state.timerInterval) clearInterval(state.timerInterval);
             state.timerInterval = setInterval(() => {
                 if (state.page === "summary" && state.readingStartTime) {
-                    state.currentTime = Math.round((new Date() - state.readingStartTime) / 1000); // Seconds
+                    state.currentTime = Math.round((new Date() - state.readingStartTime) / 1000);
+                    updateTimeDisplay();
                 } else if (state.page === "quiz" && state.quizStartTime) {
-                    state.currentTime = Math.round((new Date() - state.quizStartTime) / 1000); // Seconds
+                    state.currentTime = Math.round((new Date() - state.quizStartTime) / 1000);
+                    updateTimeDisplay();
                 }
-                render();
             }, 1000);
+        }
+
+        // Function to update only the time display
+        function updateTimeDisplay() {
+            const app = document.getElementById("app");
+            if (state.page === "summary" && state.selectedBook) {
+                const timeElement = app.querySelector(".summary-time");
+                if (timeElement) timeElement.textContent = `Time: ${formatTime(state.currentTime)}`;
+            } else if (state.page === "quiz" && state.selectedBook) {
+                const timeElement = app.querySelector(".quiz-time");
+                if (timeElement) timeElement.textContent = `Time: ${formatTime(state.currentTime)}`;
+            }
         }
 
         function render() {
@@ -685,13 +1022,38 @@
                         </div>
                     </div>
                 `;
-            } else if (state.page === "bookSelection") {
+            } else if (state.page === "categorySelection") {
+                app.innerHTML = `
+                    <div class="animate__animated animate__fadeIn">
+                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Select a Category</h1>
+                        <div class="flex justify-center space-x-4 mb-6">
+                            <div onclick="selectCategory('Product Knowledge')" class="tab">Product Knowledge</div>
+                            <div onclick="selectCategory('Selling Skills')" class="tab">Selling Skills</div>
+                            <div onclick="selectCategory('Soft Skills')" class="tab">Soft Skills</div>
+                            <div onclick="selectCategory('Top Selling Books')" class="tab">Top Selling Books</div>
+                        </div>
+                    </div>
+                `;
+                if (state.selectedCategory) {
+                    if (state.selectedCategory === "Soft Skills") {
+                        state.page = "bookSelection";
+                        render();
+                    } else {
+                        app.innerHTML += `
+                            <div class="text-center">
+                                <h2 class="text-2xl font-bold text-gray-600">Coming Soon</h2>
+                                <button onclick="setPage('categorySelection')" class="mt-4 p-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Back</button>
+                            </div>
+                        `;
+                    }
+                }
+            } else if (state.page === "bookSelection" && state.selectedCategory === "Soft Skills") {
                 app.innerHTML = `
                     <div class="animate__animated animate__fadeIn">
                         <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Select a Book</h1>
                         <div class="bookshelf">
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                                ${books.map(book => `
+                                ${books.filter(book => book.category === "Soft Skills").map(book => `
                                     <div onclick="selectBook(${book.id})" class="book-card text-center">
                                         <img src="${book.thumbnail}.png" alt="${book.title}" class="book-image">
                                         <div class="p-4">
@@ -700,7 +1062,7 @@
                                         </div>
                                     </div>
                                 `).join("")}
-                                ${Array(80).fill().map((_, i) => `
+                                ${Array(80 - books.filter(book => book.category === "Soft Skills").length).fill().map((_, i) => `
                                     <div class="book-card opacity-50 text-center flex items-center justify-center">
                                         <div class="p-4">
                                             <h3 class="text-lg font-semibold text-gray-400">Empty Slot</h3>
@@ -713,51 +1075,53 @@
                     </div>
                 `;
             } else if (state.page === "summary" && state.selectedBook) {
-                const minutes = Math.floor(state.currentTime / 60);
-                const seconds = state.currentTime % 60;
                 app.innerHTML = `
-                    <div class="animate__animated animate__fadeIn text-center mb-4 text-xl font-bold text-purple-600">Time: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}</div>
-                    <div>
-                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">${state.selectedBook.title}</h1>
-                        <div class="p-6 bg-gray-100 rounded-lg min-h-[300px]">
-                            <h2 class="text-xl font-semibold mb-2">${state.selectedBook.summary[state.currentSlide].title}</h2>
-                            <ul class="list-disc pl-5">
-                                ${state.selectedBook.summary[state.currentSlide].content.map(item => `<li>${item}</li>`).join("")}
-                            </ul>
+                    <div class="animate__animated animate__fadeIn">
+                        <div class="text-center mb-4 text-xl font-bold text-purple-600 summary-time">Time: ${formatTime(state.currentTime)}</div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">${state.selectedBook.title}</h1>
+                            <div class="p-6 bg-gray-100 rounded-lg min-h-[300px]">
+                                <h2 class="text-xl font-semibold mb-2">${state.selectedBook.summary[state.currentSlide].title}</h2>
+                                <ul class="list-disc pl-5">
+                                    ${state.selectedBook.summary[state.currentSlide].content.map(item => `<li>${item}</li>`).join("")}
+                                </ul>
+                            </div>
+                            <div class="flex justify-between mt-4">
+                                <button onclick="setSlide(0)" class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">First</button>
+                                <button onclick="setSlide(${state.currentSlide - 1})" ${state.currentSlide === 0 ? "disabled" : ""} class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform disabled:opacity-50">Back</button>
+                                <button onclick="setSlide(${state.currentSlide + 1})" ${state.currentSlide === state.selectedBook.summary.length - 1 ? "disabled" : ""} class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform disabled:opacity-50">Next</button>
+                                <button onclick="setSlide(${state.selectedBook.summary.length - 1})" class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Last</button>
+                            </div>
+                            ${state.currentSlide === state.selectedBook.summary.length - 1 ? `
+                                <button onclick="setPage('quiz')" class="mt-4 w-full p-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg transform hover:scale-105 transition-transform">Are you ready to check your understanding?</button>
+                            ` : ""}
                         </div>
-                        <div class="flex justify-between mt-4">
-                            <button onclick="setSlide(0)" class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">First</button>
-                            <button onclick="setSlide(${state.currentSlide - 1})" ${state.currentSlide === 0 ? "disabled" : ""} class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform disabled:opacity-50">Back</button>
-                            <button onclick="setSlide(${state.currentSlide + 1})" ${state.currentSlide === state.selectedBook.summary.length - 1 ? "disabled" : ""} class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform disabled:opacity-50">Next</button>
-                            <button onclick="setSlide(${state.selectedBook.summary.length - 1})" class="p-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg transform hover:scale-105 transition-transform">Last</button>
-                        </div>
-                        ${state.currentSlide === state.selectedBook.summary.length - 1 ? `
-                            <button onclick="setPage('quiz')" class="mt-4 w-full p-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg transform hover:scale-105 transition-transform">Are you ready to check your understanding?</button>
-                        ` : ""}
                     </div>
                 `;
+                if (state.readingStartTime) updateStopwatch();
             } else if (state.page === "quiz" && state.selectedBook) {
-                const minutes = Math.floor(state.currentTime / 60);
-                const seconds = state.currentTime % 60;
                 app.innerHTML = `
-                    <div class="animate__animated animate__fadeIn text-center mb-4 text-xl font-bold text-purple-600">Time: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}</div>
-                    <div>
-                        <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Quiz: ${state.selectedBook.title}</h1>
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold">${state.currentQuestion + 1}. ${state.shuffledQuiz[state.currentQuestion].question}</p>
-                            <div class="grid grid-cols-2 gap-2 mt-2">
-                                ${state.shuffledQuiz[state.currentQuestion].options.map(option => `
-                                    <button onclick="handleQuizAnswer(${state.currentQuestion}, '${option}')" class="p-2 rounded-lg ${state.quizAnswers[state.currentQuestion] === option ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' : 'bg-gray-200'} transform hover:scale-105 transition-transform">${option}</button>
-                                `).join("")}
+                    <div class="animate__animated animate__fadeIn">
+                        <div class="text-center mb-4 text-xl font-bold text-purple-600 quiz-time">Time: ${formatTime(state.currentTime)}</div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Quiz: ${state.selectedBook.title}</h1>
+                            <div class="mb-4">
+                                <p class="text-lg font-semibold">${state.currentQuestion + 1}. ${state.shuffledQuiz[state.currentQuestion].question}</p>
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    ${state.shuffledQuiz[state.currentQuestion].options.map(option => `
+                                        <button onclick="handleQuizAnswer(${state.currentQuestion}, '${option}')" class="p-2 rounded-lg ${state.quizAnswers[state.currentQuestion] === option ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' : 'bg-gray-200'} transform hover:scale-105 transition-transform">${option}</button>
+                                    `).join("")}
+                                </div>
                             </div>
                         </div>
                     </div>
                 `;
+                if (state.quizStartTime) updateStopwatch();
             } else if (state.page === "scorecard" && state.score) {
                 const readingTimeSeconds = state.readingStartTime && state.readingEndTime ? Math.round((state.readingEndTime - state.readingStartTime) / 1000) : 0;
                 const quizTimeSeconds = state.quizStartTime ? Math.round((new Date() - state.quizStartTime) / 1000) : 0;
                 app.innerHTML = `
-                    <div class="animate__animated animate__fadeIn">
+                    <div>
                         <div class="floral-border p-4">
                             <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Your Scorecard</h1>
                             <p class="text-lg">Name: ${state.user.name}</p>
@@ -774,9 +1138,9 @@
                     </div>
                 `;
             } else if (state.page === "answers" && state.selectedBook) {
-                const quizToShow = state.shuffledQuiz || state.selectedBook.quiz; // Fallback to original quiz if shuffledQuiz is null
+                const quizToShow = state.shuffledQuiz || state.selectedBook.quiz;
                 app.innerHTML = `
-                    <div class="animate__animated animate__fadeIn">
+                    <div>
                         <h1 class="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Answer Key: ${state.selectedBook.title}</h1>
                         <div class="space-y-6">
                             ${quizToShow.map((q, index) => `
@@ -796,8 +1160,14 @@
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             if (email && password) {
-                state.user = { email };
-                state.page = "details";
+                const storedUser = JSON.parse(localStorage.getItem("user"));
+                if (storedUser && storedUser.email === email) {
+                    state.user = storedUser;
+                    state.page = "categorySelection";
+                } else {
+                    state.user = { email };
+                    state.page = "details";
+                }
                 render();
             }
         }
@@ -811,9 +1181,15 @@
             const cell = document.getElementById("cell").value;
             if (name && designation && team && baseTown && date && cell) {
                 state.user = { ...state.user, name, designation, team, baseTown, date, cell };
-                state.page = "bookSelection";
+                localStorage.setItem("user", JSON.stringify(state.user));
+                state.page = "categorySelection";
                 render();
             }
+        }
+
+        function selectCategory(category) {
+            state.selectedCategory = category;
+            render();
         }
 
         function selectBook(bookId) {
@@ -828,8 +1204,8 @@
             state.quizStartTime = null;
             state.currentTime = 0;
             state.page = "summary";
-            updateStopwatch(); // Start stopwatch for reading
             render();
+            if (state.readingStartTime) updateStopwatch();
         }
 
         function setSlide(slide) {
@@ -844,16 +1220,22 @@
             state.currentQuestion = 0;
             state.shuffledQuiz = null;
             if (page === "quiz" && state.currentSlide === state.selectedBook.summary.length - 1) {
-                clearInterval(state.timerInterval); // Stop reading timer
+                clearInterval(state.timerInterval);
                 state.readingEndTime = new Date();
                 state.quizStartTime = new Date();
                 state.currentTime = 0;
-                state.shuffledQuiz = shuffleArray([...state.selectedBook.quiz]); // Shuffle quiz on entering
-                updateStopwatch(); // Start stopwatch for quiz
+                state.shuffledQuiz = shuffleArray([...state.selectedBook.quiz]);
+                render();
+                if (state.quizStartTime) updateStopwatch();
             } else if (page === "scorecard") {
-                clearInterval(state.timerInterval); // Stop quiz timer
+                clearInterval(state.timerInterval);
+                render();
+            } else if (page === "bookSelection") {
+                state.selectedCategory = "Soft Skills"; // Reset to Soft Skills category
+                render();
+            } else {
+                render();
             }
-            render();
         }
 
         function handleQuizAnswer(questionIndex, answer) {
